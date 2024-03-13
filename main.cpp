@@ -87,7 +87,7 @@ int main() {
     /// window.setFramerateLimit(60);                                       ///
     ///////////////////////////////////////////////////////////////////////////
 
-    sf::VertexArray lines(sf::LinesStrip, 0);;
+    sf::VertexArray lines(sf::LinesStrip, 0);
 
     while(window.isOpen()) {
         bool shouldExit = false;

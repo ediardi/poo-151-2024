@@ -35,9 +35,6 @@ int main() {
     ////////////////////////////////////////////////////////////////////////
     ///
     std::cout << "Hello, world!\n";
-    std::array<int, 100> v{};
-    int nr;
-    std::cout << "Introduceți nr: ";
     /////////////////////////////////////////////////////////////////////////
     /// Observație: dacă aveți nevoie să citiți date de intrare de la tastatură,
     /// dați exemple de date de intrare folosind fișierul tastatura.txt
@@ -58,17 +55,6 @@ int main() {
     /// program care merg (și să le evitați pe cele care nu merg).
     ///
     /////////////////////////////////////////////////////////////////////////
-    std::cin >> nr;
-    /////////////////////////////////////////////////////////////////////////
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "v[" << i << "] = ";
-        std::cin >> v[i];
-    }
-    std::cout << "\n\n";
-    std::cout << "Am citit de la tastatură " << nr << " elemente:\n";
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "- " << v[i] << "\n";
-    }
     ///////////////////////////////////////////////////////////////////////////
     /// Pentru date citite din fișier, NU folosiți tastatura.txt. Creați-vă voi
     /// alt fișier propriu cu ce alt nume doriți.
@@ -101,23 +87,35 @@ int main() {
     /// window.setFramerateLimit(60);                                       ///
     ///////////////////////////////////////////////////////////////////////////
 
+    sf::VertexArray lines(sf::LinesStrip, 0);;
+
     while(window.isOpen()) {
         bool shouldExit = false;
         sf::Event e{};
         while(window.pollEvent(e)) {
             switch(e.type) {
-            case sf::Event::Closed:
+            case sf::Event::Closed: {
                 window.close();
                 break;
-            case sf::Event::Resized:
+            }
+            case sf::Event::Resized: {
                 std::cout << "New width: " << window.getSize().x << '\n'
                           << "New height: " << window.getSize().y << '\n';
                 break;
-            case sf::Event::KeyPressed:
+            }
+            case sf::Event::KeyPressed: {
                 std::cout << "Received key " << (e.key.code == sf::Keyboard::X ? "X" : "(other)") << "\n";
-                if(e.key.code == sf::Keyboard::Escape)
+                if (e.key.code == sf::Keyboard::Escape)
                     shouldExit = true;
                 break;
+            }
+            case sf::Event::MouseButtonPressed: {
+                sf::Vector2 mousepos = sf::Mouse::getPosition(window);
+                sf::Vector2f first_try(static_cast<float>(mousepos.x),static_cast<float>(mousepos.y));
+                std::cout << "Got click " << mousepos.x << ' ' << mousepos.y << "\n";
+                lines.append(first_try);
+                break;
+            }
             default:
                 break;
             }
@@ -130,6 +128,7 @@ int main() {
         std::this_thread::sleep_for(300ms);
 
         window.clear();
+        window.draw(lines);
         window.display();
     }
     return 0;

@@ -14,6 +14,48 @@
 #include "env_fixes.h"                                              //
 //////////////////////////////////////////////////////////////////////
 
+class Point {
+    float x;
+    float y;
+    Point(int x,int y)
+    {
+        this->x= static_cast<float>(x);
+        this->y= static_cast<float>(y);
+    }
+public:
+    void setx(float new_x){this->x=new_x;}
+    void sety(float new_y){this->y=new_y;}
+    float getx(){return x;}
+    float gety(){return y;}
+    sf::Vertex tovertex()
+    {
+        sf::Vector2f temp1(x,y);
+        sf::Vertex temp(temp1);
+        return temp;
+    }
+};
+
+class Line {
+    Point a,b;
+public:
+    Point startpoint(){ return a;}
+    Point endpoint(){ return b;}
+};
+
+class Intersecting_Lines {
+
+    std::array<Line,0> lines;
+    int count=0;
+    sf::VertexArray todraw(){
+        sf::VertexArray temp(sf::Lines,0);
+        for(auto line:lines)
+        {
+            temp.append(line.startpoint().tovertex());
+            temp.append(line.endpoint().tovertex());
+        }
+        return temp;
+    }
+};
 
 //////////////////////////////////////////////////////////////////////
 /// This class is used to test that the memory leak checks work as expected even when using a GUI
@@ -87,7 +129,7 @@ int main() {
     /// window.setFramerateLimit(60);                                       ///
     ///////////////////////////////////////////////////////////////////////////
 
-    sf::VertexArray lines(sf::LinesStrip, 0);
+    sf::VertexArray lines(sf::Lines, 0);
 
     while(window.isOpen()) {
         bool shouldExit = false;

@@ -107,6 +107,12 @@ add_executable(${PROJECT_NAME}
     main.cpp
     generated/src/Helper.cpp
     env_fixes.h
+        Triangle.h
+        Point.h
+        Point.cpp
+        Triangle.cpp
+        Drawables.cpp
+        Drawables.h
 )
 
 ###############################################################################

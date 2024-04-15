@@ -10,15 +10,12 @@
 class Point {
     float x;
     float y;
-    sf::Color color[7]={sf::Color::White,sf::Color::Yellow,sf::Color::Red
-            ,sf::Color::Green, sf::Color::Magenta, sf::Color::Cyan
-            , sf::Color::Blue};
     int color_index=0;
 public:
     Point(sf::Vertex v);
     Point();
     Point(int x,int y);
-    void inc_color();
+    Point(float x,float y);
     void setx(float new_x);
     void sety(float new_y);
     float getx() const;

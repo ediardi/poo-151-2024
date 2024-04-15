@@ -19,34 +19,45 @@ void Drawables::add_triangle_vertex(sf::Vertex x) {
     }
 }
 
-void Drawables::add_circle(Point origin, float rad) {
-    sf::CircleShape cir(rad,60);
-    cir.setOrigin(rad,rad);
-    cir.setPosition(origin.getx(),origin.gety());
-    cir.setOutlineColor(sf::Color::White);
-    cir.setFillColor(sf::Color::Transparent);
-    cir.setOutlineThickness(1);
-    circles.push_back(cir);
+void Drawables::add_circle(Point origin, float radius) {
+    sf::CircleShape circle(radius,60);
+    circle.setOrigin(radius,radius);
+    circle.setPosition(origin.getx(),origin.gety());
+    circle.setOutlineColor(sf::Color::White);
+    circle.setFillColor(sf::Color::Transparent);
+    circle.setOutlineThickness(1);
+    circles.push_back(circle);
+}
+
+void Drawables::clear_all() {
+    points.clear();
+    triangles.clear();
+    circles.clear();
+    trianglepoints=0;
 }
 
 void Drawables::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(points);
-    for(auto& cir:circles)
+    for(auto& circle:circles)
     {
-        target.draw(cir);
+        target.draw(circle);
     }
     sf::VertexArray linepoints(sf::Lines,0);
-    for(auto tr:triangles)
+    for(auto triangle:triangles)
     {
-        linepoints.append(tr.geta().tovertex());
-        linepoints.append(tr.getb().tovertex());
+        linepoints.append(triangle.geta().tovertex());
+        linepoints.append(triangle.getb().tovertex());
 
-        linepoints.append(tr.getb().tovertex());
-        linepoints.append(tr.getc().tovertex());
+        linepoints.append(triangle.getb().tovertex());
+        linepoints.append(triangle.getc().tovertex());
 
-        linepoints.append(tr.getc().tovertex());
-        linepoints.append(tr.geta().tovertex());
+        linepoints.append(triangle.getc().tovertex());
+        linepoints.append(triangle.geta().tovertex());
     }
     target.draw(linepoints);
+}
+
+void Drawables::add_triangle(Triangle triangle) {
+    triangles.push_back(triangle);
 }
 

@@ -14,104 +14,10 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "Triangle.h"
-#include "Point.h"
 #include "Drawables.h"
+#include "GameStateManager.h"
 
 
-
-class Line {
-    Point a,b;
-    int intersections=0;
-    sf::Color color[7]={sf::Color::White,sf::Color::Yellow,sf::Color::Red
-    ,sf::Color::Green, sf::Color::Magenta, sf::Color::Cyan
-    , sf::Color::Blue};
-public:
-    Point startpoint(){ return a;};
-    Point endpoint(){ return b;};
-    Line(Point a1,Point b1) : a(a1),b(b1) {}
-    sf::Color get_color()
-    {
-        return color[intersections];
-    }
-    void inc_interesction()
-    {
-        intersections++;
-        a.inc_color();
-        b.inc_color();
-    }
-    bool intersects(Line line)
-    {
-        // credit goes to https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
-        // Returns 1 if the lines intersect, otherwise 0. In addition, if the lines
-        // p0= a
-        // p1 =b
-        // p2 =line.a
-        // p3 =line.b
-        {
-            float s1_x, s1_y, s2_x, s2_y;
-            s1_x = b.getx() - a.getx();                 s1_y = b.gety() - a.gety();
-            s2_x = line.b.getx() - line.a.getx();        s2_y = line.b.gety() - line.a.gety();
-
-            float s, t;
-            s = (-s1_y * (a.getx() - line.a.getx()) + s1_x * (a.gety() - line.a.gety())) / (-s2_x * s1_y + s1_x * s2_y);
-            t = ( s2_x * (a.gety() - line.a.gety()) - s2_y * (a.getx() - line.a.getx())) / (-s2_x * s1_y + s1_x * s2_y);
-
-            if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
-            {
-                // Collision detected
-                return true;
-            }
-
-            return false; // No collision
-        }
-    }
-};
-
-class Intersecting_Lines {
-
-    std::vector<Line> lines;
-    bool clickstate=0;
-    Point temppoint=Point(0,0);
-public:
-    void addline(Line line){
-        for (auto& lin:lines)
-        {
-            if(line.intersects(lin))
-            {
-                line.inc_interesction();
-                lin.inc_interesction();
-            }
-        }
-        lines.push_back(line);
-    }
-    void add_point(Point new_p){
-        if(clickstate==0)
-        {
-            clickstate=1;
-            temppoint=new_p;
-        }
-        else
-        {
-            clickstate=0;
-            addline(Line(temppoint,new_p));
-        }
-    }
-    void tempdisplay(){
-        if(clickstate==1)
-        {
-
-        }
-    }
-    sf::VertexArray todraw(){
-        sf::VertexArray temp(sf::Lines,0);
-        for(auto line:lines)
-        {
-            temp.append(line.startpoint().tovertex());
-            temp.append(line.endpoint().tovertex());
-        }
-        return temp;
-    }
-};
 
 
 
@@ -139,6 +45,9 @@ SomeClass *getC() {
 
 
 int main() {
+
+    //// Challange make a triangle of largest area possible that is within the circumscribed circle of another triangle and does not intersect the original triangle
+
     ////////////////////////////////////////////////////////////////////////
     /// NOTE: this function call is needed for environment-specific fixes //
     init_threads();                                                       //
@@ -184,6 +93,9 @@ int main() {
     std::cout << c << "\n";
     delete c;
 
+
+    GameStateManager game;
+
     sf::RenderWindow window;
     ///////////////////////////////////////////////////////////////////////////
     /// NOTE: sync with env variable APP_WINDOW from .github/workflows/cmake.yml:31
@@ -198,7 +110,6 @@ int main() {
     ///////////////////////////////////////////////////////////////////////////
 
     //sf::VertexArray lines(sf::Lines, 0);
-    Intersecting_Lines lines;
 
     while(window.isOpen()) {
         bool shouldExit = false;
@@ -222,11 +133,9 @@ int main() {
             }
             case sf::Event::MouseButtonPressed: {
                 sf::Vector2 mousepos = sf::Mouse::getPosition(window);
-                //lines.add_point(Point(mousepos.x,mousepos.y));
-                sf::Vector2f first_try(static_cast<float>(mousepos.x),static_cast<float>(mousepos.y));
-                Drawables::add_triangle_vertex(sf::Vertex(first_try));
-                //std::cout << "Got click " << mousepos.x << ' ' << mousepos.y << "\n";
-                //lines.append(first_try);
+                sf::Vector2f coordinates(static_cast<float>(mousepos.x),static_cast<float>(mousepos.y));
+                std::cout << "Got click " << mousepos.x << ' ' << mousepos.y << "\n";
+                game.handle_click(coordinates.x,coordinates.y);
                 break;
             }
             default:
@@ -234,29 +143,25 @@ int main() {
                 break;
             }
         }
+        shouldExit |= game.has_ended();
+        // instead of if statement
         if(shouldExit) {
             window.close();
             break;
         }
-        using namespace std::chrono_literals;
-        std::this_thread::sleep_for(30ms);
+
+        game.frame_update();
 
         window.clear();
-        window.draw(lines.todraw());
         Drawables drawables;
         window.draw(drawables);
 
-        /*
-        sf::CircleShape cirtext(100,60);
-        cirtext.setOrigin(0,0);
-        cirtext.setOutlineColor(sf::Color::White);
-        cirtext.setFillColor(sf::Color::Transparent);
-        cirtext.setOutlineThickness(2);
-        window.draw(cirtext);
-         */
-
-
         window.display();
+
+
+        using namespace std::chrono_literals;
+        std::this_thread::sleep_for(30ms);
     }
+
     return 0;
 }

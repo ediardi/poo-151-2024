@@ -113,6 +113,10 @@ add_executable(${PROJECT_NAME}
         Triangle.cpp
         Drawables.cpp
         Drawables.h
+        Line.cpp
+        Line.h
+        GameStateManager.cpp
+        GameStateManager.h
 )
 
 ###############################################################################

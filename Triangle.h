@@ -5,10 +5,13 @@
 #ifndef OOP_TRIANGLE_H
 #define OOP_TRIANGLE_H
 
+#include "ColoredTriangle.h"
 #include "Point.h"
 #include <SFML/Graphics.hpp>
 #include "Line.h"
 #include "Drawables.h"
+
+class ColoredTriangle;
 
 class Triangle{
     Point a,b,c;
@@ -21,14 +24,18 @@ public:
     Triangle(Point a,Point b,Point c);
     Triangle();
     Triangle(const Triangle& other);
-    void add_on_screen();
-    void add_circumcircle_on_screen();
-    Point geta();
-    Point getb();
-    Point getc();
+    ColoredTriangle* add_on_screen();
+    sf::CircleShape* add_circumcircle_on_screen();
+    Point geta() const;
+    Point getb() const;
+    Point getc() const;
+    Point getcenter() const;
+    float getradius() const;
     void seta(Point pointa);
     void setb(Point pointb);
     void setc(Point pointc);
+    bool is_inside_circle(Point origin,float radius) const;
+    bool does_not_intersect_triangle(Triangle other) const;
 };
 
 #endif //OOP_TRIANGLE_H

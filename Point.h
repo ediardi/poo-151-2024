@@ -21,7 +21,6 @@ public:
     float getx() const;
     float gety() const;
     sf::Vertex tovertex();
-    friend class Triangle;
 };
 
 #endif //OOP_POINT_H

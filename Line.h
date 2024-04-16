@@ -14,6 +14,7 @@ public:
     Point endpoint();
     Line(Point a1,Point b1);
     bool intersects(Line line);
+    float length();
 };
 
 

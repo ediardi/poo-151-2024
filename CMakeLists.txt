@@ -117,6 +117,8 @@ add_executable(${PROJECT_NAME}
         Line.h
         GameStateManager.cpp
         GameStateManager.h
+        ColoredTriangle.cpp
+        ColoredTriangle.h
 )
 
 ###############################################################################

@@ -3,6 +3,7 @@
 //
 
 #include "Line.h"
+#include "cmath"
 
 Point Line::startpoint() { return a;}
 
@@ -34,4 +35,10 @@ bool Line::intersects(Line line) {
 
         return false; // No collision
     }
+}
+
+float Line::length() {
+    float lengthx=b.getx()-a.getx();
+    float lengthy=b.gety()-a.gety();
+    return sqrtf( lengthx * lengthx + lengthy * lengthy);
 }

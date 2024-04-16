@@ -9,17 +9,7 @@ void Drawables::add(sf::Vertex x) {
     points.append(x);
 }
 
-void Drawables::add_triangle_vertex(sf::Vertex x) {
-    points.append(x);
-    trianglepoints++;
-    if(trianglepoints%3==0)
-    {
-        int n=points.getVertexCount();
-        triangles.emplace_back(points[n-1],points[n-2],points[n-3]);
-    }
-}
-
-void Drawables::add_circle(Point origin, float radius) {
+sf::CircleShape* Drawables::add_circle(Point origin, float radius) {
     sf::CircleShape circle(radius,60);
     circle.setOrigin(radius,radius);
     circle.setPosition(origin.getx(),origin.gety());
@@ -27,6 +17,7 @@ void Drawables::add_circle(Point origin, float radius) {
     circle.setFillColor(sf::Color::Transparent);
     circle.setOutlineThickness(1);
     circles.push_back(circle);
+    return &circles.back();
 }
 
 void Drawables::clear_all() {
@@ -43,21 +34,39 @@ void Drawables::draw(sf::RenderTarget &target, sf::RenderStates states) const {
         target.draw(circle);
     }
     sf::VertexArray linepoints(sf::Lines,0);
-    for(auto triangle:triangles)
+    for(const auto& triangle_struct:triangles)
     {
-        linepoints.append(triangle.geta().tovertex());
-        linepoints.append(triangle.getb().tovertex());
+        sf::Vertex p;
+        Point a=triangle_struct.triangle->geta();
+        Point b=triangle_struct.triangle->getb();
+        Point c=triangle_struct.triangle->getc();
 
-        linepoints.append(triangle.getb().tovertex());
-        linepoints.append(triangle.getc().tovertex());
+        p=a.tovertex();
+        p.color=triangle_struct.color;
+        linepoints.append(p);
+        p=b.tovertex();
+        p.color=triangle_struct.color;
+        linepoints.append(p);
 
-        linepoints.append(triangle.getc().tovertex());
-        linepoints.append(triangle.geta().tovertex());
+        p=b.tovertex();
+        p.color=triangle_struct.color;
+        linepoints.append(p);
+        p=c.tovertex();
+        p.color=triangle_struct.color;
+        linepoints.append(p);
+
+        p=c.tovertex();
+        p.color=triangle_struct.color;
+        linepoints.append(p);
+        p=a.tovertex();
+        p.color=triangle_struct.color;
+        linepoints.append(p);
     }
     target.draw(linepoints);
 }
 
-void Drawables::add_triangle(Triangle triangle) {
-    triangles.push_back(triangle);
+ColoredTriangle * Drawables::add_triangle(const Triangle* triangle) {
+    triangles.push_back(ColoredTriangle(triangle,sf::Color::White));
+    return &triangles.back();
 }
 

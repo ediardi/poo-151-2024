@@ -112,16 +112,36 @@ void GameStateManager::evaluate() {
     // check for intersections
     if(is_in_circle() && triangles_do_not_intersect())
     {
+        float score=100*candidate_triangle->get_area()/challange_triangle->best_area();
         std::cout<<"The 3 points you submitted created a valid triangle"<<std::endl;
-        std::cout<<"The triangle has an are equal to"<<std::endl;
-        std::cout<<"The maximum possible area"<<std::endl;
-        std::cout<<"On level "<<index<<" you achieved a score of"<<std::endl;
-        replaylevel=false;
+        std::cout<<"The triangle has an are equal to "<<candidate_triangle->get_area()<<std::endl;
+        std::cout<<"The maximum possible area is "<<challange_triangle->best_area()<<std::endl;
+        std::cout<<"On level "<<index<<" you achieved a score of "<<score<<" %"<<std::endl;
+        if(score>90)
+        {
+            std::cout<<"Excellent result"<<std::endl;
+            replaylevel=false;
+        }
+        else
+        {
+            if(score>75)
+            {
+                std::cout<<"You passed the level but you can do better"<<std::endl;
+                replaylevel=false;
+            }
+            else
+            {
+                std::cout<<"That score looks pretty low, try and get a better one"<<std::endl;
+                replaylevel=true;
+            }
+        }
+        std::cout<<"Actions disabled until animation finishes to prevent accidental skip"<<std::endl;
         highligh_color=sf::Color::Green;
     }
     else
     {
         std::cout<<"The 3 points you submitted formed a triangle that intersected some geometry"<<std::endl;
+        std::cout<<"Actions disabled until animation finishes to prevent accidental skip"<<std::endl;
         replaylevel=true;
         highligh_color=sf::Color::Red;
     }

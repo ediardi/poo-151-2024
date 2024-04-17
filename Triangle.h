@@ -19,6 +19,12 @@ class Triangle{
     Point circumcircle_center;
     float radius=0;
     void calc_center();
+
+    float get_signed_area();
+
+    float get_signed_area(Point d, Point e, Point f);
+
+    bool same_side_as_center(Point d, Point e, Point f);
 public:
     Triangle(sf::Vertex a,sf::Vertex b,sf::Vertex c);
     Triangle(Point a,Point b,Point c);
@@ -36,6 +42,10 @@ public:
     void setc(Point pointc);
     bool is_inside_circle(Point origin,float radius) const;
     bool does_not_intersect_triangle(Triangle other) const;
+
+    float get_area();
+
+    float best_area();
 };
 
 #endif //OOP_TRIANGLE_H

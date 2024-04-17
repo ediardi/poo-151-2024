@@ -31,6 +31,94 @@ void Triangle::calc_center(){ // de facut :transform in constructor, fac destruc
     radius = sqrtf((a.getx() - x) * (a.getx() - x) + (a.gety() - y) * (a.gety() - y));
 }
 
+float Triangle::get_area()
+{
+    return fabsf(get_signed_area());
+}
+
+float Triangle::get_signed_area()
+{
+    return (a.getx()*b.gety() - a.getx()*c.gety() + b.getx()*c.gety() - b.getx()*a.gety() + c.getx()*a.gety() - c.getx()*b.gety())/2;
+}
+
+float Triangle::get_signed_area(Point d, Point e, Point f)
+{
+    return (d.getx() * e.gety() - d.getx() * f.gety() + e.getx() * f.gety() - e.getx() * d.gety() + f.getx() * d.gety() - f.getx() * e.gety()) / 2;
+}
+
+bool Triangle::same_side_as_center(Point d,Point e, Point f)
+{
+    float sign1=get_signed_area(d,e,f);
+    float sign2=get_signed_area(d,e,circumcircle_center);
+    if((fabsf(sign1) == 0.0f || fabsf(sign2) == 0.0f))
+    {
+        return true;
+    }
+    return (sign1>=0)==(sign2>=0);
+}
+
+float  Triangle::best_area()
+{
+    float best_area=get_area();
+    float distance_from_center;
+    float potential_height;
+    float line_lenght;
+    float potential_area;
+
+    line_lenght=Line(a,b).length();
+    distance_from_center = 2 * fabsf(get_signed_area(a,b,circumcircle_center)) / line_lenght;
+    if(same_side_as_center(a,b,c))
+    {
+        potential_height=radius-distance_from_center;
+    }
+    else
+    {
+        potential_height=radius+distance_from_center;
+    }
+    if(potential_height>line_lenght)
+        potential_area= sqrtf(3)*3/4*radius*radius;
+    else
+        potential_area=potential_height*line_lenght/2;
+
+    best_area= fmaxf(best_area,potential_area);
+
+    line_lenght=Line(b,c).length();
+    distance_from_center = 2 * fabsf(get_signed_area(b,c,circumcircle_center)) / line_lenght;
+    if(same_side_as_center(b,c,a))
+    {
+        potential_height=radius-distance_from_center;
+    }
+    else
+    {
+        potential_height=radius+distance_from_center;
+    }
+    if(potential_height>line_lenght)
+        potential_area= sqrtf(3)*3/4*radius*radius;
+    else
+        potential_area=potential_height*line_lenght/2;
+
+    best_area= fmaxf(best_area,potential_area);
+
+    line_lenght=Line(c,a).length();
+    distance_from_center = 2 * fabsf(get_signed_area(c,a,circumcircle_center)) / line_lenght;
+    if(same_side_as_center(c,a,b))
+    {
+        potential_height=radius-distance_from_center;
+    }
+    else
+    {
+        potential_height=radius+distance_from_center;
+    }
+    if(potential_height>line_lenght)
+        potential_area= sqrtf(3)*3/4*radius*radius;
+    else
+        potential_area=potential_height*line_lenght/2;
+
+    best_area= fmaxf(best_area,potential_area);
+
+    return best_area;
+}
+
 Point Triangle::geta() const {
     return a;
 }

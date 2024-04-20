@@ -24,45 +24,47 @@ void Drawables::clear_all() {
     points.clear();
     triangles.clear();
     circles.clear();
-    trianglepoints=0;
 }
 
 void Drawables::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+    // to do: delete (placed here to avoid unused warning)
+    states.texture=states.texture;
+    //
     target.draw(points);
     for(auto& circle:circles)
     {
         target.draw(circle);
     }
-    sf::VertexArray linepoints(sf::Lines,0);
+    sf::VertexArray line_points(sf::Lines, 0);
     for(const auto& triangle_struct:triangles)
     {
         sf::Vertex p;
-        Point a=triangle_struct.triangle->geta();
-        Point b=triangle_struct.triangle->getb();
-        Point c=triangle_struct.triangle->getc();
+        Point a= triangle_struct.triangle->get_a();
+        Point b= triangle_struct.triangle->get_b();
+        Point c= triangle_struct.triangle->get_c();
 
-        p=a.tovertex();
+        p= a.to_vertex();
         p.color=triangle_struct.color;
-        linepoints.append(p);
-        p=b.tovertex();
+        line_points.append(p);
+        p= b.to_vertex();
         p.color=triangle_struct.color;
-        linepoints.append(p);
+        line_points.append(p);
 
-        p=b.tovertex();
+        p= b.to_vertex();
         p.color=triangle_struct.color;
-        linepoints.append(p);
-        p=c.tovertex();
+        line_points.append(p);
+        p= c.to_vertex();
         p.color=triangle_struct.color;
-        linepoints.append(p);
+        line_points.append(p);
 
-        p=c.tovertex();
+        p= c.to_vertex();
         p.color=triangle_struct.color;
-        linepoints.append(p);
-        p=a.tovertex();
+        line_points.append(p);
+        p= a.to_vertex();
         p.color=triangle_struct.color;
-        linepoints.append(p);
+        line_points.append(p);
     }
-    target.draw(linepoints);
+    target.draw(line_points);
 }
 
 ColoredTriangle * Drawables::add_triangle(const Triangle* triangle) {

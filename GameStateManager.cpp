@@ -7,10 +7,12 @@
 #include "Drawables.h"
 #include "Point.h"
 
-GameStateManager::GameStateManager():fin("nivele.txt") {
+GameStateManager::GameStateManager():fin("levels.txt") {
     fin>>n;
     index=0;
     next_level();
+    std::cout << "This game has " << n << " levels in which you have to make a triangle of largest area possible that is within the circumscribed circle of the given triangle and does not intersect it" << std::endl;
+    std::cout << "To pass each level you have to have an area of at least 75% of the theoretical maximum area" << std::endl;
 }
 
 void GameStateManager::handle_click(float x, float y) {
@@ -22,20 +24,20 @@ void GameStateManager::handle_click(float x, float y) {
                 case 1:
                 {
                     candidate_triangle = new Triangle();
-                    candidate_triangle->seta(Point(x,y));
+                    candidate_triangle->set_a(Point(x, y));
                     Drawables::add(sf::Vertex(sf::Vector2f (x,y)));
                     break;
                 }
                 case 2:
                 {
-                    candidate_triangle->setb(Point(x,y));
+                    candidate_triangle->set_b(Point(x, y));
                     Drawables::add(sf::Vertex(sf::Vector2f (x,y)));
                     break;
                 }
                 case 3:
                 {
                     points = 0;
-                    candidate_triangle->setc(Point(x,y));
+                    candidate_triangle->set_c(Point(x, y));
                     Drawables::add(sf::Vertex(sf::Vector2f (x,y)));
                     evaluate();
                     break;
@@ -58,18 +60,32 @@ void GameStateManager::handle_click(float x, float y) {
 
 GameStateManager::~GameStateManager() {
     fin.close();
+    Drawables::clear_all();
+    delete challenge_triangle;
+    delete candidate_triangle;
+    draw_circle_reference = nullptr;
+    draw_challenge_triangle_reference = nullptr;
+    draw_candidate_triangle_reference = nullptr;
 }
 
 void GameStateManager::next_level() {
     Drawables::clear_all();
+    draw_circle_reference = nullptr;
+    draw_challenge_triangle_reference = nullptr;
+    draw_candidate_triangle_reference = nullptr;
     delete candidate_triangle;
-    if(replaylevel)
+    if(replay_level)
     {
-        draw_challenge_triangle_reference = challange_triangle->add_on_screen();
+        //for the sake of using constructors:
+        Triangle* old=challenge_triangle;
+        challenge_triangle = new Triangle(*old);
+        delete old;
+        //
+        draw_challenge_triangle_reference = challenge_triangle->add_on_screen();
         state = awaiting_point;
     }
     else {
-        delete challange_triangle;
+        delete challenge_triangle;
         if (index < n) {
             float x, y;
             fin >> x >> y;
@@ -78,8 +94,8 @@ void GameStateManager::next_level() {
             Point b(x, y);
             fin >> x >> y;
             Point c(x, y);
-            challange_triangle = new Triangle(a, b, c);
-            draw_challenge_triangle_reference = challange_triangle->add_on_screen();
+            challenge_triangle = new Triangle(a, b, c);
+            draw_challenge_triangle_reference = challenge_triangle->add_on_screen();
             index++;
             state = awaiting_point;
         } else {
@@ -94,12 +110,12 @@ bool GameStateManager::has_ended() {
     return false;
 }
 
-bool inline GameStateManager::is_in_circle(){
-    return candidate_triangle->is_inside_circle(challange_triangle->getcenter(),challange_triangle->getradius());
+bool inline GameStateManager::is_in_circle() const{
+    return candidate_triangle->is_inside_circle(challenge_triangle->get_center(), challenge_triangle->get_radius());
 }
 
-bool inline GameStateManager::triangles_do_not_intersect(){
-    return candidate_triangle->does_not_intersect_triangle(*challange_triangle);
+bool inline GameStateManager::triangles_do_not_intersect() const{
+    return candidate_triangle->does_not_intersect_triangle(*challenge_triangle);
 }
 
 void GameStateManager::evaluate() {
@@ -107,43 +123,47 @@ void GameStateManager::evaluate() {
     frames_to_show_results=0;
 
     draw_candidate_triangle_reference = candidate_triangle->add_on_screen();
-    draw_circle_reference= challange_triangle->add_circumcircle_on_screen();
+    draw_circle_reference= challenge_triangle->add_circumscribed_circle_on_screen();
 
     // check for intersections
     if(is_in_circle() && triangles_do_not_intersect())
     {
-        float score=100*candidate_triangle->get_area()/challange_triangle->best_area();
+        float score= 100 * candidate_triangle->get_area() / challenge_triangle->best_area();
         std::cout<<"The 3 points you submitted created a valid triangle"<<std::endl;
-        std::cout<<"The triangle has an are equal to "<<candidate_triangle->get_area()<<std::endl;
-        std::cout<<"The maximum possible area is "<<challange_triangle->best_area()<<std::endl;
+        std::cout << *candidate_triangle;
+        std::cout<<"The triangle has an area equal to "<<candidate_triangle->get_area()<<std::endl<<std::endl;
+
+        std::cout<<"The challenge has the following characteristics:" << std::endl;
+        std::cout<< *challenge_triangle;
+        std::cout << "The maximum possible area is " << challenge_triangle->best_area() << std::endl <<std::endl;
         std::cout<<"On level "<<index<<" you achieved a score of "<<score<<" %"<<std::endl;
         if(score>90)
         {
             std::cout<<"Excellent result"<<std::endl;
-            replaylevel=false;
+            replay_level=false;
         }
         else
         {
             if(score>75)
             {
                 std::cout<<"You passed the level but you can do better"<<std::endl;
-                replaylevel=false;
+                replay_level=false;
             }
             else
             {
                 std::cout<<"That score looks pretty low, try and get a better one"<<std::endl;
-                replaylevel=true;
+                replay_level=true;
             }
         }
         std::cout<<"Actions disabled until animation finishes to prevent accidental skip"<<std::endl;
-        highligh_color=sf::Color::Green;
+        highlight_color=sf::Color::Green;
     }
     else
     {
         std::cout<<"The 3 points you submitted formed a triangle that intersected some geometry"<<std::endl;
         std::cout<<"Actions disabled until animation finishes to prevent accidental skip"<<std::endl;
-        replaylevel=true;
-        highligh_color=sf::Color::Red;
+        replay_level=true;
+        highlight_color=sf::Color::Red;
     }
 }
 
@@ -153,7 +173,7 @@ void GameStateManager::frame_update() {
         if(frames_to_show_results%10==0)
         {
             draw_candidate_triangle_reference->color= opposite(draw_candidate_triangle_reference->color);
-            if(replaylevel)
+            if(replay_level)
             {
                 if(!is_in_circle())
                     draw_circle_reference->setOutlineColor(opposite(draw_circle_reference->getOutlineColor()));
@@ -162,20 +182,26 @@ void GameStateManager::frame_update() {
             }
         }
         frames_to_show_results++;
-        if (frames_to_show_results > results_max_frames)
-        {
-            state=click_to_continue;
-            if(!replaylevel)
-                std::cout<<"Click anywhere on the game screen to continue to next level"<<std::endl;
+        if (frames_to_show_results > results_max_frames) {
+            state = click_to_continue;
+            std::cout << "Animation finished!" << std::endl;
+            if (!replay_level) {
+                if(index!=n)
+                    std::cout << "Click anywhere on the game screen to continue to next level" << std::endl;
+                else {
+                    std::cout << "CONGRATULATIONS! YOU FINISHED THE PUZZLE!" << std::endl;
+                    std::cout << "Click anywhere in the interface to close the application" << std::endl;
+                }
+            }
             else
                 std::cout<<"Click anywhere on the game screen to restart level"<<std::endl;
         }
     }
 }
 
-sf::Color GameStateManager::opposite(sf::Color color) {
+sf::Color GameStateManager::opposite(const sf::Color color) const{
     if(color==sf::Color::White)
-        return highligh_color;
+        return highlight_color;
     return sf::Color::White;
 }
 

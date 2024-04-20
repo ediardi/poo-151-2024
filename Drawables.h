@@ -17,11 +17,10 @@ private:
     static sf::VertexArray points;
     static std::vector<ColoredTriangle> triangles;
     static std::vector<sf::CircleShape> circles;
-    static inline int trianglepoints=0;
 public:
     static void add(sf::Vertex x);
     static sf::CircleShape* add_circle(Point origin,float rad);
-    static void change_circle_color(sf::CircleShape& reference,sf::Color color);
+    //static void change_circle_color(sf::CircleShape& reference,sf::Color color);
     static void clear_all();
     static ColoredTriangle * add_triangle(const Triangle* triangle);
 private:

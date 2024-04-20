@@ -1,9 +1,9 @@
-# Tema 1: Geometry Challange!
+# Tema 1: Geometry Challenge!
 
 Cat de bine intuiesti si vizualizezi geometria? Dat un triunghi, incearca sa desenezi alt triunchi 
 (prin 3 clickuri de maus) care sa aiba arie cat mai mare, dar sa nu intersecteze triunghiul original 
 si cercul in care acesta e inscris. Pentru a verifica intuitia, cercul va fi ascuns, pana la 
-verificarea raspunsului
+verificarea raspunsului. Jocul se joaca atat cu interfata cat si cu consola
 
 ### Important!
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.

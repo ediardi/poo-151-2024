@@ -8,19 +8,19 @@
 #include <SFML/Graphics.hpp>
 
 class Point {
-    float x;
-    float y;
-    int color_index=0;
+    float x{};
+    float y{};
 public:
-    Point(sf::Vertex v);
+    explicit Point(sf::Vertex v);
     Point();
     Point(int x,int y);
     Point(float x,float y);
     void setx(float new_x);
     void sety(float new_y);
-    float getx() const;
-    float gety() const;
-    sf::Vertex tovertex();
+    [[nodiscard]] float getx() const;
+    [[nodiscard]] float gety() const;
+    [[nodiscard]] sf::Vertex to_vertex() const;
+    friend std::ostream& operator<<(std::ostream& os, const Point& point);
 };
 
 #endif //OOP_POINT_H

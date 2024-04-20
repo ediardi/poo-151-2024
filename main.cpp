@@ -1,5 +1,4 @@
 #include <iostream>
-#include <array>
 #include <chrono>
 #include <thread>
 #include <SFML/Graphics.hpp>
@@ -29,7 +28,7 @@ std::vector<ColoredTriangle> Drawables::triangles;
 
 int main() {
 
-    //// Challange make a triangle of largest area possible that is within the circumscribed circle of another triangle and does not intersect the original triangle
+    //// Challenge: make a triangle of largest area possible that is within the circumscribed circle of another triangle and does not intersect the original triangle
 
     ////////////////////////////////////////////////////////////////////////
     /// NOTE: this function call is needed for environment-specific fixes //
@@ -78,9 +77,9 @@ int main() {
                 break;
             }
             case sf::Event::MouseButtonPressed: {
-                sf::Vector2 mousepos = sf::Mouse::getPosition(window);
-                sf::Vector2f coordinates(static_cast<float>(mousepos.x),static_cast<float>(mousepos.y));
-                std::cout << "Got click " << mousepos.x << ' ' << mousepos.y << "\n";
+                sf::Vector2 mouse_position = sf::Mouse::getPosition(window);
+                sf::Vector2f coordinates(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y));
+                std::cout << "Got click " << mouse_position.x << ' ' << mouse_position.y << "\n";
                 game.handle_click(coordinates.x,coordinates.y);
                 break;
             }

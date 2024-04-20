@@ -5,13 +5,13 @@
 #include "Line.h"
 #include "cmath"
 
-Point Line::startpoint() { return a;}
+//Point Line::startpoint() { return a;}
 
-Point Line::endpoint() { return b;}
+//Point Line::endpoint() { return b;}
 
 Line::Line(Point a1, Point b1) : a(a1),b(b1) {}
 
-bool Line::intersects(Line line) {
+bool Line::intersects(Line line) const{
     // credit goes to https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
     // Returns 1 if the lines intersect, otherwise 0. In addition, if the lines
     // p0= a
@@ -37,8 +37,13 @@ bool Line::intersects(Line line) {
     }
 }
 
-float Line::length() {
-    float lengthx=b.getx()-a.getx();
-    float lengthy=b.gety()-a.gety();
-    return sqrtf( lengthx * lengthx + lengthy * lengthy);
+float Line::get_length() const{
+    float length_x= b.getx() - a.getx();
+    float length_y= b.gety() - a.gety();
+    return sqrtf(length_x * length_x + length_y * length_y);
+}
+
+std::ostream &operator<<(std::ostream &os, const Line &line) {
+    os << "Line has length " << line.get_length() << std::endl;
+    return os;
 }

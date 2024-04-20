@@ -20,7 +20,7 @@ void Point::setx(float new_x){this->x=new_x;}
 void Point::sety(float new_y){this->y=new_y;}
 float Point::getx() const{return x;}
 float Point::gety() const{return y;}
-sf::Vertex Point::tovertex()
+sf::Vertex Point::to_vertex() const
 {
     sf::Vector2f temp1(x,y);
     sf::Vertex temp(temp1,sf::Color::White);
@@ -32,4 +32,9 @@ Point::Point(float x, float y) {
         this->x= x;
         this->y= y;
     }
+}
+
+std::ostream &operator<<(std::ostream &os, const Point &point) {
+    os << point.x << " " << point.y << std::endl;
+    return os;
 }

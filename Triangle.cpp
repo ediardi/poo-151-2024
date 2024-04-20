@@ -132,11 +132,11 @@ Point Triangle::get_c() const {
     return c;
 }
 
-ColoredTriangle* Triangle::add_on_screen() const {
+int Triangle::add_on_screen() const {
     return Drawables::add_triangle(this);
 }
 
-sf::CircleShape* Triangle::add_circumscribed_circle_on_screen() const {
+int Triangle::add_circumscribed_circle_on_screen() const {
     Drawables::add(circumscribed_circle_center.to_vertex());
     return Drawables::add_circle(circumscribed_circle_center, radius);
 }

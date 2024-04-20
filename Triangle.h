@@ -31,8 +31,8 @@ public:
     Triangle();
     Triangle(const Triangle& other);
     ~Triangle();
-    [[nodiscard]] ColoredTriangle* add_on_screen() const;
-    [[nodiscard]] sf::CircleShape* add_circumscribed_circle_on_screen() const;
+    [[nodiscard]] int add_on_screen() const;
+    [[nodiscard]] int add_circumscribed_circle_on_screen() const;
     [[nodiscard]] Point get_a() const;
     [[nodiscard]] Point get_b() const;
     [[nodiscard]] Point get_c() const;

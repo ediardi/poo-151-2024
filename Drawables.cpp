@@ -9,15 +9,16 @@ void Drawables::add(sf::Vertex x) {
     points.append(x);
 }
 
-sf::CircleShape* Drawables::add_circle(Point origin, float radius) {
+int Drawables::add_circle(Point origin, float radius) {
     sf::CircleShape circle(radius,60);
     circle.setOrigin(radius,radius);
     circle.setPosition(origin.getx(),origin.gety());
     circle.setOutlineColor(sf::Color::White);
     circle.setFillColor(sf::Color::Transparent);
     circle.setOutlineThickness(1);
-    circles.push_back(circle);
-    return &circles.back();
+    int new_index=(int)circles.size();
+    circles[new_index]=circle;
+    return new_index;
 }
 
 void Drawables::clear_all() {
@@ -31,12 +32,12 @@ void Drawables::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     states.texture=states.texture;
     //
     target.draw(points);
-    for(auto& circle:circles)
+    for(const auto &[index,circle]:circles)
     {
         target.draw(circle);
     }
     sf::VertexArray line_points(sf::Lines, 0);
-    for(const auto& triangle_struct:triangles)
+    for(const auto& [index,triangle_struct]:triangles)
     {
         sf::Vertex p;
         Point a= triangle_struct.triangle->get_a();
@@ -67,8 +68,26 @@ void Drawables::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(line_points);
 }
 
-ColoredTriangle * Drawables::add_triangle(const Triangle* triangle) {
-    triangles.push_back(ColoredTriangle(triangle,sf::Color::White));
-    return &triangles.back();
+int Drawables::add_triangle(const Triangle* triangle) {
+    int new_index=(int)triangles.size();
+    auto colored_triangle= ColoredTriangle(triangle,sf::Color::White);
+    triangles[new_index]= colored_triangle;
+    return new_index;
+}
+
+void Drawables::change_circle_color(const int index, const sf::Color new_color) {
+    circles[index].setOutlineColor(new_color);
+}
+
+void Drawables::change_triangle_color(const int index, const sf::Color new_color) {
+    triangles[index].color=new_color;
+}
+
+sf::Color Drawables::get_circle_color(const int index) {
+    return circles[index].getOutlineColor();
+}
+
+sf::Color Drawables::get_triangle_color(const int index) {
+    return triangles[index].color;
 }
 

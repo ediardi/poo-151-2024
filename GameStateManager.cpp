@@ -23,21 +23,22 @@ void GameStateManager::handle_click(float x, float y) {
             switch (points) {
                 case 1:
                 {
-                    candidate_triangle = new Triangle();
-                    candidate_triangle->set_a(Point(x, y));
+                    //funcite in drawables = get referinta from index
+                    candidate_triangle = Triangle();
+                    candidate_triangle.set_a(Point(x, y));
                     Drawables::add(sf::Vertex(sf::Vector2f (x,y)));
                     break;
                 }
                 case 2:
                 {
-                    candidate_triangle->set_b(Point(x, y));
+                    candidate_triangle.set_b(Point(x, y));
                     Drawables::add(sf::Vertex(sf::Vector2f (x,y)));
                     break;
                 }
                 case 3:
                 {
                     points = 0;
-                    candidate_triangle->set_c(Point(x, y));
+                    candidate_triangle.set_c(Point(x, y));
                     Drawables::add(sf::Vertex(sf::Vector2f (x,y)));
                     evaluate();
                     break;
@@ -61,31 +62,23 @@ void GameStateManager::handle_click(float x, float y) {
 GameStateManager::~GameStateManager() {
     fin.close();
     Drawables::clear_all();
-    delete challenge_triangle;
-    delete candidate_triangle;
-    draw_circle_reference = nullptr;
-    draw_challenge_triangle_reference = nullptr;
-    draw_candidate_triangle_reference = nullptr;
 }
 
 void GameStateManager::next_level() {
     Drawables::clear_all();
-    draw_circle_reference = nullptr;
-    draw_challenge_triangle_reference = nullptr;
-    draw_candidate_triangle_reference = nullptr;
-    delete candidate_triangle;
+    draw_circle_index = -1;
+    draw_challenge_triangle_index = -1;
+    draw_candidate_triangle_index = -1;
     if(replay_level)
     {
         //for the sake of using constructors:
-        Triangle* old=challenge_triangle;
-        challenge_triangle = new Triangle(*old);
-        delete old;
+        Triangle old=challenge_triangle;
+        challenge_triangle = Triangle(old);
         //
-        draw_challenge_triangle_reference = challenge_triangle->add_on_screen();
+        draw_challenge_triangle_index = challenge_triangle.add_on_screen();
         state = awaiting_point;
     }
     else {
-        delete challenge_triangle;
         if (index < n) {
             float x, y;
             fin >> x >> y;
@@ -94,8 +87,8 @@ void GameStateManager::next_level() {
             Point b(x, y);
             fin >> x >> y;
             Point c(x, y);
-            challenge_triangle = new Triangle(a, b, c);
-            draw_challenge_triangle_reference = challenge_triangle->add_on_screen();
+            challenge_triangle =  Triangle(a, b, c);
+            draw_challenge_triangle_index = challenge_triangle.add_on_screen();
             index++;
             state = awaiting_point;
         } else {
@@ -111,31 +104,31 @@ bool GameStateManager::has_ended() {
 }
 
 bool inline GameStateManager::is_in_circle() const{
-    return candidate_triangle->is_inside_circle(challenge_triangle->get_center(), challenge_triangle->get_radius());
+    return candidate_triangle.is_inside_circle(challenge_triangle.get_center(), challenge_triangle.get_radius());
 }
 
 bool inline GameStateManager::triangles_do_not_intersect() const{
-    return candidate_triangle->does_not_intersect_triangle(*challenge_triangle);
+    return candidate_triangle.does_not_intersect_triangle(challenge_triangle);
 }
 
 void GameStateManager::evaluate() {
     state=showing_result;
     frames_to_show_results=0;
 
-    draw_candidate_triangle_reference = candidate_triangle->add_on_screen();
-    draw_circle_reference= challenge_triangle->add_circumscribed_circle_on_screen();
+    draw_candidate_triangle_index = candidate_triangle.add_on_screen();
+    draw_circle_index= challenge_triangle.add_circumscribed_circle_on_screen();
 
     // check for intersections
     if(is_in_circle() && triangles_do_not_intersect())
     {
-        float score= 100 * candidate_triangle->get_area() / challenge_triangle->best_area();
+        float score= 100 * candidate_triangle.get_area() / challenge_triangle.best_area();
         std::cout<<"The 3 points you submitted created a valid triangle"<<std::endl;
-        std::cout << *candidate_triangle;
-        std::cout<<"The triangle has an area equal to "<<candidate_triangle->get_area()<<std::endl<<std::endl;
+        std::cout << candidate_triangle;
+        std::cout<<"The triangle has an area equal to "<<candidate_triangle.get_area()<<std::endl<<std::endl;
 
         std::cout<<"The challenge has the following characteristics:" << std::endl;
-        std::cout<< *challenge_triangle;
-        std::cout << "The maximum possible area is " << challenge_triangle->best_area() << std::endl <<std::endl;
+        std::cout<< challenge_triangle;
+        std::cout << "The maximum possible area is " << challenge_triangle.best_area() << std::endl <<std::endl;
         std::cout<<"On level "<<index<<" you achieved a score of "<<score<<" %"<<std::endl;
         if(score>90)
         {
@@ -172,13 +165,17 @@ void GameStateManager::frame_update() {
     {
         if(frames_to_show_results%10==0)
         {
-            draw_candidate_triangle_reference->color= opposite(draw_candidate_triangle_reference->color);
+            sf::Color new_color= opposite( Drawables::get_triangle_color(draw_candidate_triangle_index));
+
+            Drawables::change_triangle_color(draw_candidate_triangle_index,new_color);
             if(replay_level)
             {
-                if(!is_in_circle())
-                    draw_circle_reference->setOutlineColor(opposite(draw_circle_reference->getOutlineColor()));
-                if(!triangles_do_not_intersect())
-                    draw_challenge_triangle_reference->color=opposite(draw_challenge_triangle_reference->color);
+                if(!is_in_circle()) {
+                    Drawables::change_circle_color(draw_circle_index,new_color);
+                }
+                if(!triangles_do_not_intersect()) {
+                    Drawables::change_triangle_color(draw_challenge_triangle_index,new_color);
+                }
             }
         }
         frames_to_show_results++;

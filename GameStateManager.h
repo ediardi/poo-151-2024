@@ -16,13 +16,15 @@ class GameStateManager {
     void next_level();
     void evaluate();
     bool replay_level=false;
-    Triangle *challenge_triangle= nullptr;
-    Triangle *candidate_triangle= nullptr;
+    Triangle challenge_triangle;
+    Triangle candidate_triangle;
+    int challenge_triangle_index = -1;
+    int candidate_triangle_index = -1;
     sf::Color highlight_color;
     sf::Color opposite(sf::Color color) const;
-    sf::CircleShape *draw_circle_reference = nullptr;
-    ColoredTriangle *draw_challenge_triangle_reference = nullptr;
-    ColoredTriangle *draw_candidate_triangle_reference = nullptr;
+    int draw_circle_index = -1;
+    int draw_challenge_triangle_index = -1;
+    int draw_candidate_triangle_index = -1;
     enum State{
         awaiting_point,
         showing_result,

@@ -22,8 +22,8 @@
 
 
 sf::VertexArray Drawables::points;
-std::vector<sf::CircleShape> Drawables::circles;
-std::vector<ColoredTriangle> Drawables::triangles;
+std::unordered_map<int,sf::CircleShape> Drawables::circles;
+std::unordered_map<int,ColoredTriangle> Drawables::triangles;
 
 
 int main() {

@@ -13,8 +13,7 @@
     calc_center();
 }
 */
-Triangle::Triangle(Point a, Point b, Point c): a(a),b(b),c(c) {
-    circumscribed_circle_center=Point();
+Triangle::Triangle(Point a, Point b, Point c): a(a),b(b),c(c),circumscribed_circle_center(Point()) {
     calc_center();
 }
 
@@ -133,7 +132,7 @@ Point Triangle::get_c() const {
 }
 
 int Triangle::add_on_screen() const {
-    return Drawables::add_triangle(this);
+    return Drawables::add_triangle(*this);
 }
 
 int Triangle::add_circumscribed_circle_on_screen() const {
@@ -153,8 +152,10 @@ void Triangle::set_c(const Point& point_c) {
     this->c=point_c;
 }
 
-Triangle::Triangle() = default;
+Triangle::Triangle() = default ;
 Triangle::Triangle(const Triangle &other): a(other.a), b(other.b), c(other.c), circumscribed_circle_center(other.circumscribed_circle_center), radius(other.radius) {
+    //just to bypass =default suggestion/warning
+    radius=other.radius;
 }
 
 bool Triangle::is_inside_circle(const Point origin,const float other_radius) const{
@@ -197,6 +198,17 @@ std::ostream &operator<<(std::ostream &os, const Triangle &triangle) {
     os << "Triangle has edges of the following lengths:" << std::endl;
     os << Line(triangle.a,triangle.b) << Line(triangle.b,triangle.c) << Line(triangle.c,triangle.a) << std::endl;
     return os;
+}
+
+Triangle &Triangle::operator=(const Triangle &other) {
+    a=other.a;
+    //second time here just to bypass =default suggestion/warning
+    a=other.a;
+    b=other.b;
+    c=other.c;
+    radius=other.radius;
+    circumscribed_circle_center=other.circumscribed_circle_center;
+    return *this;
 }
 
 Triangle::~Triangle() = default;

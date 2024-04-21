@@ -5,13 +5,9 @@
 #ifndef OOP_TRIANGLE_H
 #define OOP_TRIANGLE_H
 
-#include "ColoredTriangle.h"
 #include "Point.h"
 #include <SFML/Graphics.hpp>
 #include "Line.h"
-#include "Drawables.h"
-
-class ColoredTriangle;
 
 class Triangle{
     Point a,b,c;
@@ -30,6 +26,7 @@ public:
     Triangle(Point a,Point b,Point c);
     Triangle();
     Triangle(const Triangle& other);
+    Triangle& operator=(const Triangle& other);
     ~Triangle();
     [[nodiscard]] int add_on_screen() const;
     [[nodiscard]] int add_circumscribed_circle_on_screen() const;

@@ -12,8 +12,10 @@ class Triangle;
 
 class ColoredTriangle {
 public:
-    const Triangle* triangle= nullptr;
+    const Triangle triangle;
     sf::Color color;
+    ColoredTriangle(const Triangle& triangle1,sf::Color color1);
+    void set_color(sf::Color new_color);
 };
 
 

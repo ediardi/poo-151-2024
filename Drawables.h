@@ -7,11 +7,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
-#include "ColoredTriangle.h"
 #include "Triangle.h"
+#include "ColoredTriangle.h"
 
-class ColoredTriangle;
 class Triangle;
+class ColoredTriangle;
 
 class Drawables : public sf::Drawable{
 private:
@@ -23,7 +23,7 @@ public:
     static int add_circle(Point origin,float rad);
     //static void change_circle_color(sf::CircleShape& reference,sf::Color color);
     static void clear_all();
-    static int add_triangle(const Triangle* triangle);
+    static int add_triangle(const Triangle& triangle);
     static void change_circle_color(int index, sf::Color new_color);
     static void change_triangle_color(int index, sf::Color new_color);
     [[nodiscard]] static sf::Color get_circle_color(int index) ;

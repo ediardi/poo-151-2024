@@ -55,6 +55,9 @@ int main() {
     /// window.setFramerateLimit(60);                                       ///
     ///////////////////////////////////////////////////////////////////////////
 
+    // for executable debug purposes
+    if(window.isOpen())
+        std::cout<<"Game window opened"<<std::endl;
 
     while(window.isOpen()) {
         bool shouldExit = false;

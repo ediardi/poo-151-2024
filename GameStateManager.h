@@ -18,8 +18,6 @@ class GameStateManager {
     bool replay_level=false;
     Triangle challenge_triangle;
     Triangle candidate_triangle;
-    int challenge_triangle_index = -1;
-    int candidate_triangle_index = -1;
     sf::Color highlight_color;
     sf::Color opposite(sf::Color color) const;
     int draw_circle_index = -1;

@@ -32,13 +32,15 @@ void Drawables::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     states.texture=states.texture;
     //
     target.draw(points);
-    for(const auto &[index,circle]:circles)
+    for(const auto &item:circles)
     {
+        auto circle =item.second;
         target.draw(circle);
     }
     sf::VertexArray line_points(sf::Lines, 0);
-    for(const auto& [index,triangle_struct]:triangles)
+    for(const auto& item:triangles)
     {
+        auto triangle_struct=item.second;
         sf::Vertex p;
         Point a= triangle_struct.triangle.get_a();
         Point b= triangle_struct.triangle.get_b();
@@ -82,9 +84,9 @@ void Drawables::change_triangle_color(const int index, const sf::Color new_color
     triangles.at(index).set_color(new_color);
 }
 
-sf::Color Drawables::get_circle_color(const int index) {
+/*sf::Color Drawables::get_circle_color(const int index) {
     return circles[index].getOutlineColor();
-}
+}*/
 
 sf::Color Drawables::get_triangle_color(const int index) {
     return triangles.at(index).color;

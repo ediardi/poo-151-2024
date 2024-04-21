@@ -22,7 +22,7 @@ float inline module(Point a)
     return (a.getx() * a.getx() + a.gety() * a.gety());
 }
 
-void Triangle::calc_center(){ // de facut :transform in constructor, fac destructor , copiere operator <<
+void Triangle::calc_center(){
     float d= ((a.getx() * (b.gety() - c.gety()) + b.getx() * (c.gety() - a.gety()) + c.getx() * (a.gety() - b.gety())) * 2);
     float x= (module(a) * (b.gety() - c.gety()) + module(b) * (c.gety() - a.gety()) + module(c) * (a.gety() - b.gety())) / d;
     float y= (module(a) * (c.getx() - b.getx()) + module(b) * (a.getx() - c.getx()) + module(c) * (b.getx() - a.getx())) / d;
@@ -202,12 +202,12 @@ std::ostream &operator<<(std::ostream &os, const Triangle &triangle) {
 
 Triangle &Triangle::operator=(const Triangle &other) {
     a=other.a;
-    //second time here just to bypass =default suggestion/warning
-    a=other.a;
     b=other.b;
     c=other.c;
     radius=other.radius;
     circumscribed_circle_center=other.circumscribed_circle_center;
+    //second time here just to bypass =default suggestion/warning
+    calc_center();
     return *this;
 }
 

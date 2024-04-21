@@ -26,7 +26,7 @@ public:
     static int add_triangle(const Triangle& triangle);
     static void change_circle_color(int index, sf::Color new_color);
     static void change_triangle_color(int index, sf::Color new_color);
-    [[nodiscard]] static sf::Color get_circle_color(int index) ;
+    //[[nodiscard]] static sf::Color get_circle_color(int index) ;
     [[nodiscard]] static sf::Color get_triangle_color(int index) ;
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

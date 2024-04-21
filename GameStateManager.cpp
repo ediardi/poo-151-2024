@@ -23,7 +23,6 @@ void GameStateManager::handle_click(float x, float y) {
             switch (points) {
                 case 1:
                 {
-                    //funcite in drawables = get referinta from index
                     candidate_triangle = Triangle();
                     candidate_triangle.set_a(Point(x, y));
                     Drawables::add(sf::Vertex(sf::Vector2f (x,y)));

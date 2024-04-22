@@ -120,7 +120,8 @@ add_executable(${PROJECT_NAME}
         ColoredTriangle.cpp
         ColoredTriangle.h
 )
-
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/levels.txt
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 ###############################################################################
 
 # target definitions

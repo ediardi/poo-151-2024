@@ -48,6 +48,7 @@ jobs:
 
       - name: Install cppcheck
         run: |
+          sudo rm /etc/apt/sources.list.d/microsoft-prod.list
           sudo apt-get update
           sudo apt-get install --no-install-recommends cppcheck
 
@@ -233,6 +234,7 @@ jobs:
       - name: Install Linux Dependencies
         if: runner.os == 'Linux'
         run: |
+          sudo rm /etc/apt/sources.list.d/microsoft-prod.list
           # sudo apt-get update
           sudo apt-get install --no-install-recommends ninja-build xdotool \
           openbox \
@@ -261,6 +263,7 @@ jobs:
       - name: Install valgrind
         if: runner.os == 'Linux' && matrix.runs_valgrind == true
         run: |
+          sudo rm /etc/apt/sources.list.d/microsoft-prod.list
           # sudo apt-get update
           sudo apt-get install --no-install-recommends valgrind
 

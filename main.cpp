@@ -20,7 +20,7 @@
 
 
 
-
+// static variables
 sf::VertexArray Drawables::points;
 std::unordered_map<int,sf::CircleShape> Drawables::circles;
 std::unordered_map<int,ColoredTriangle> Drawables::triangles;
@@ -91,8 +91,10 @@ int main() {
                 break;
             }
         }
-        shouldExit |= game.has_ended();
         // instead of if statement
+        shouldExit |= game.has_ended();
+
+
         if(shouldExit) {
             window.close();
             break;

@@ -11,11 +11,14 @@
 class Triangle;
 
 class ColoredTriangle {
-public:
+private:
     const Triangle triangle;
     sf::Color color;
+public:
     ColoredTriangle(const Triangle& triangle1,sf::Color color1);
     void set_color(sf::Color new_color);
+    [[nodiscard]] Triangle get_triangle() const;
+    [[nodiscard]] sf::Color get_color() const;
 };
 
 

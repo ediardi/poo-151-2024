@@ -12,3 +12,11 @@ void ColoredTriangle::set_color(sf::Color new_color) {
     color=new_color;
 }
 
+Triangle ColoredTriangle::get_triangle() const{
+    return triangle;
+}
+
+sf::Color ColoredTriangle::get_color() const {
+    return color;
+}
+

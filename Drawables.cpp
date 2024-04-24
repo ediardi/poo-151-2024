@@ -40,31 +40,32 @@ void Drawables::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     sf::VertexArray line_points(sf::Lines, 0);
     for(const auto& item:triangles)
     {
-        auto triangle_struct=item.second;
+        auto triangle_struct=item.second.get_triangle();
+        auto triangle_color=item.second.get_color();
         sf::Vertex p;
-        Point a= triangle_struct.triangle.get_a();
-        Point b= triangle_struct.triangle.get_b();
-        Point c= triangle_struct.triangle.get_c();
+        Point a= triangle_struct.get_a();
+        Point b= triangle_struct.get_b();
+        Point c= triangle_struct.get_c();
 
         p= a.to_vertex();
-        p.color=triangle_struct.color;
+        p.color=triangle_color;
         line_points.append(p);
         p= b.to_vertex();
-        p.color=triangle_struct.color;
+        p.color=triangle_color;
         line_points.append(p);
 
         p= b.to_vertex();
-        p.color=triangle_struct.color;
+        p.color=triangle_color;
         line_points.append(p);
         p= c.to_vertex();
-        p.color=triangle_struct.color;
+        p.color=triangle_color;
         line_points.append(p);
 
         p= c.to_vertex();
-        p.color=triangle_struct.color;
+        p.color=triangle_color;
         line_points.append(p);
         p= a.to_vertex();
-        p.color=triangle_struct.color;
+        p.color=triangle_color;
         line_points.append(p);
     }
     target.draw(line_points);
@@ -89,6 +90,6 @@ void Drawables::change_triangle_color(const int index, const sf::Color new_color
 }*/
 
 sf::Color Drawables::get_triangle_color(const int index) {
-    return triangles.at(index).color;
+    return triangles.at(index).get_color();
 }
 

@@ -5,4 +5,4 @@
 #include "DegenerateTriangleError.h"
 
 DegenerateTriangleError::DegenerateTriangleError(const std::string &message) :
-        std::runtime_error("Triunghi degenerat:" + message) {}
+        std::runtime_error(std::string ("Triunghi degenerat:") + message) {}

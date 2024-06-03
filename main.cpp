@@ -12,7 +12,6 @@
 #include "env_fixes.h"                                              //
 //////////////////////////////////////////////////////////////////////
 
-#include "Triangle.h"
 #include "Drawables.h"
 #include "GameStateManager.h"
 

@@ -21,6 +21,7 @@ public:
     [[nodiscard]] float gety() const;
     [[nodiscard]] sf::Vertex to_vertex() const;
     friend std::ostream& operator<<(std::ostream& os, const Point& point);
+    friend bool operator==(const Point& a,const Point& b) ;
 };
 
 #endif //OOP_POINT_H

@@ -120,10 +120,17 @@ void GameStateManager::evaluate() {
     // check for intersections
     if(is_in_circle() && triangles_do_not_intersect())
     {
-        float score= 100 * candidate_triangle.get_area() / challenge_triangle.best_area();
-        std::cout<<"The 3 points you submitted created a valid triangle"<<std::endl;
-        std::cout << candidate_triangle;
-        std::cout<<"The triangle has an area equal to "<<candidate_triangle.get_area()<<std::endl<<std::endl;
+        float score=0;
+        try {
+            score= 100 * candidate_triangle.get_area() / challenge_triangle.best_area();
+            std::cout<<"The 3 points you submitted created a valid triangle"<<std::endl;
+            std::cout << candidate_triangle;
+            std::cout<<"The triangle has an area equal to "<<candidate_triangle.get_area()<<std::endl<<std::endl;
+        }
+        catch (DegenerateTriangleError& err){
+            std::cout << "The triangle you entered is degenerate and has no area"<< std::endl;
+            std::cout << err.what() << std::endl;
+        }
 
         std::cout<<"The challenge has the following characteristics:" << std::endl;
         std::cout << challenge_triangle;

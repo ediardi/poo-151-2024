@@ -38,3 +38,10 @@ std::ostream &operator<<(std::ostream &os, const Point &point) {
     os << point.x << " " << point.y << std::endl;
     return os;
 }
+
+bool operator==(const Point &a, const Point &b) {
+    if(a.x==b.x && a.y == b.y)
+        return true;
+    return false;
+}
+

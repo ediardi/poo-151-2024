@@ -12,13 +12,13 @@
 class Triangle{
     //Line ab,bc,ca;
 
-    [[nodiscard]] float get_signed_area() const;
-
 protected:
     Point a;
     Point b;
     Point c;
     [[nodiscard]] static float get_signed_area(const Point& d,const Point& e,const Point& f) ;
+
+    [[nodiscard]] float get_signed_area() const;
 
 public:
     //Triangle(sf::Vertex a,sf::Vertex b,sf::Vertex c);

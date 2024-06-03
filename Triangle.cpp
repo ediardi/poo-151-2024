@@ -13,22 +13,7 @@
     calc_center();
 }
 */
-Triangle::Triangle(Point a, Point b, Point c): a(a),b(b),c(c),circumscribed_circle_center(Point()) {
-    calc_center();
-}
-
-float inline module(Point a)
-{
-    return (a.getx() * a.getx() + a.gety() * a.gety());
-}
-
-void Triangle::calc_center(){
-    float d= ((a.getx() * (b.gety() - c.gety()) + b.getx() * (c.gety() - a.gety()) + c.getx() * (a.gety() - b.gety())) * 2);
-    float x= (module(a) * (b.gety() - c.gety()) + module(b) * (c.gety() - a.gety()) + module(c) * (a.gety() - b.gety())) / d;
-    float y= (module(a) * (c.getx() - b.getx()) + module(b) * (a.getx() - c.getx()) + module(c) * (b.getx() - a.getx())) / d;
-    circumscribed_circle_center.setx(x);
-    circumscribed_circle_center.sety(y);
-    radius = sqrtf((a.getx() - x) * (a.getx() - x) + (a.gety() - y) * (a.gety() - y));
+Triangle::Triangle(Point a, Point b, Point c): a(a),b(b),c(c) {
 }
 
 float Triangle::get_area() const
@@ -44,79 +29,6 @@ float Triangle::get_signed_area() const
 float Triangle::get_signed_area(const Point& d,const Point& e,const Point& f)
 {
     return (d.getx() * e.gety() - d.getx() * f.gety() + e.getx() * f.gety() - e.getx() * d.gety() + f.getx() * d.gety() - f.getx() * e.gety()) / 2;
-}
-
-bool Triangle::same_side_as_center(const Point& d,const Point& e,const Point& f) const
-{
-    float sign1=get_signed_area(d,e,f);
-    float sign2=get_signed_area(d, e, circumscribed_circle_center);
-    if((fabsf(sign1) == 0.0f || fabsf(sign2) == 0.0f))
-    {
-        return true;
-    }
-    return (sign1>=0)==(sign2>=0);
-}
-
-float  Triangle::best_area() const
-{
-    float best_area=get_area();
-    float distance_from_center;
-    float potential_height;
-    float line_lenght;
-    float potential_area;
-
-    line_lenght= Line(a, b).get_length();
-    distance_from_center = 2 * fabsf(get_signed_area(a, b, circumscribed_circle_center)) / line_lenght;
-    if(same_side_as_center(a,b,c))
-    {
-        potential_height=radius-distance_from_center;
-    }
-    else
-    {
-        potential_height=radius+distance_from_center;
-    }
-    if(potential_height>line_lenght)
-        potential_area= sqrtf(3)*3/4*radius*radius;
-    else
-        potential_area=potential_height*line_lenght/2;
-
-    best_area= fmaxf(best_area,potential_area);
-
-    line_lenght= Line(b, c).get_length();
-    distance_from_center = 2 * fabsf(get_signed_area(b, c, circumscribed_circle_center)) / line_lenght;
-    if(same_side_as_center(b,c,a))
-    {
-        potential_height=radius-distance_from_center;
-    }
-    else
-    {
-        potential_height=radius+distance_from_center;
-    }
-    if(potential_height>line_lenght)
-        potential_area= sqrtf(3)*3/4*radius*radius;
-    else
-        potential_area=potential_height*line_lenght/2;
-
-    best_area= fmaxf(best_area,potential_area);
-
-    line_lenght= Line(c, a).get_length();
-    distance_from_center = 2 * fabsf(get_signed_area(c, a, circumscribed_circle_center)) / line_lenght;
-    if(same_side_as_center(c,a,b))
-    {
-        potential_height=radius-distance_from_center;
-    }
-    else
-    {
-        potential_height=radius+distance_from_center;
-    }
-    if(potential_height>line_lenght)
-        potential_area= sqrtf(3)*3/4*radius*radius;
-    else
-        potential_area=potential_height*line_lenght/2;
-
-    best_area= fmaxf(best_area,potential_area);
-
-    return best_area;
 }
 
 Point Triangle::get_a() const {
@@ -135,11 +47,6 @@ int Triangle::add_on_screen() const {
     return Drawables::add_triangle(*this);
 }
 
-int Triangle::add_circumscribed_circle_on_screen() const {
-    Drawables::add(circumscribed_circle_center.to_vertex());
-    return Drawables::add_circle(circumscribed_circle_center, radius);
-}
-
 void Triangle::set_a(const Point& point_a) {
     this->a=point_a;
 }
@@ -153,19 +60,9 @@ void Triangle::set_c(const Point& point_c) {
 }
 
 Triangle::Triangle() = default ;
-Triangle::Triangle(const Triangle &other): a(other.a), b(other.b), c(other.c), circumscribed_circle_center(other.circumscribed_circle_center), radius(other.radius) {
+Triangle::Triangle(const Triangle &other): a(other.a), b(other.b), c(other.c) {
     //just to bypass =default suggestion/warning
-    radius=other.radius;
-}
-
-bool Triangle::is_inside_circle(const Point origin,const float other_radius) const{
-    if(Line(origin, a).get_length() > other_radius)
-        return false;
-    if(Line(origin, b).get_length() > other_radius)
-        return false;
-    if(Line(origin, c).get_length() > other_radius)
-        return false;
-    return true;
+    a=other.a;
 }
 
 bool Triangle::does_not_intersect_triangle(const Triangle& other) const{
@@ -184,14 +81,6 @@ bool Triangle::does_not_intersect_triangle(const Triangle& other) const{
     return true;
 }
 
-Point Triangle::get_center() const{
-    return circumscribed_circle_center;
-}
-
-float Triangle::get_radius() const{
-    return radius;
-}
-
 std::ostream &operator<<(std::ostream &os, const Triangle &triangle) {
     os << "Triangle is formed with the following points:" << std::endl;
     os << triangle.a << triangle.b << triangle.c;
@@ -204,10 +93,8 @@ Triangle &Triangle::operator=(const Triangle &other) {
     a=other.a;
     b=other.b;
     c=other.c;
-    radius=other.radius;
-    circumscribed_circle_center=other.circumscribed_circle_center;
-    //second time here just to bypass =default suggestion/warning
-    calc_center();
+    //to avoid warning
+    c=other.c;
     return *this;
 }
 

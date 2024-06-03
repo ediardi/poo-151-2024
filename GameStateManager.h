@@ -7,7 +7,8 @@
 
 
 #include <fstream>
-#include "Triangle.h"
+#include "TriangleWithCenter.h"
+#include "PlayerTriangle.h"
 
 class GameStateManager {
     std::ifstream fin;
@@ -16,8 +17,8 @@ class GameStateManager {
     void next_level();
     void evaluate();
     bool replay_level=false;
-    Triangle challenge_triangle;
-    Triangle candidate_triangle;
+    TriangleWithCenter challenge_triangle;
+    PlayerTriangle candidate_triangle;
     sf::Color highlight_color;
     sf::Color opposite(sf::Color color) const;
     int draw_circle_index = -1;

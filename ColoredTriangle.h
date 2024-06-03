@@ -10,9 +10,8 @@
 
 class Triangle;
 
-class ColoredTriangle {
+class ColoredTriangle : private Triangle {
 private:
-    const Triangle triangle;
     sf::Color color;
 public:
     ColoredTriangle(const Triangle& triangle1,sf::Color color1);

@@ -23,7 +23,7 @@ void GameStateManager::handle_click(float x, float y) {
             switch (points) {
                 case 1:
                 {
-                    candidate_triangle = Triangle();
+                    candidate_triangle = PlayerTriangle();
                     candidate_triangle.set_a(Point(x, y));
                     Drawables::add(sf::Vertex(sf::Vector2f (x,y)));
                     break;
@@ -71,8 +71,8 @@ void GameStateManager::next_level() {
     if(replay_level)
     {
         //for the sake of using constructors:
-        Triangle old=challenge_triangle;
-        challenge_triangle = Triangle(old);
+        TriangleWithCenter old=challenge_triangle;
+        challenge_triangle = TriangleWithCenter(old);
         //
         draw_challenge_triangle_index = challenge_triangle.add_on_screen();
         state = awaiting_point;
@@ -86,7 +86,7 @@ void GameStateManager::next_level() {
             Point b(x, y);
             fin >> x >> y;
             Point c(x, y);
-            challenge_triangle =  Triangle(a, b, c);
+            challenge_triangle =  TriangleWithCenter(a, b, c);
             draw_challenge_triangle_index = challenge_triangle.add_on_screen();
             index++;
             state = awaiting_point;
@@ -126,7 +126,7 @@ void GameStateManager::evaluate() {
         std::cout<<"The triangle has an area equal to "<<candidate_triangle.get_area()<<std::endl<<std::endl;
 
         std::cout<<"The challenge has the following characteristics:" << std::endl;
-        std::cout<< challenge_triangle;
+        std::cout << challenge_triangle;
         std::cout << "The maximum possible area is " << challenge_triangle.best_area() << std::endl <<std::endl;
         std::cout<<"On level "<<index<<" you achieved a score of "<<score<<" %"<<std::endl;
         if(score>90)

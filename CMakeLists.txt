@@ -119,6 +119,10 @@ add_executable(${PROJECT_NAME}
         GameStateManager.h
         ColoredTriangle.cpp
         ColoredTriangle.h
+        TriangleWithCenter.cpp
+        TriangleWithCenter.h
+        PlayerTriangle.cpp
+        PlayerTriangle.h
 )
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/levels.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

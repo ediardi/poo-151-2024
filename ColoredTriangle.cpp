@@ -4,7 +4,7 @@
 
 #include "ColoredTriangle.h"
 
-ColoredTriangle::ColoredTriangle(const Triangle& triangle1, sf::Color color1): triangle(triangle1),color(color1) {
+ColoredTriangle::ColoredTriangle(const Triangle& triangle1, sf::Color color1): Triangle(triangle1),color(color1) {
 
 }
 
@@ -13,7 +13,7 @@ void ColoredTriangle::set_color(sf::Color new_color) {
 }
 
 Triangle ColoredTriangle::get_triangle() const{
-    return triangle;
+    return *dynamic_cast<const Triangle*>(this);
 }
 
 sf::Color ColoredTriangle::get_color() const {

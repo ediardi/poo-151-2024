@@ -3,6 +3,7 @@
 //
 
 #include "DegenerateTriangleError.h"
+#include <string>
 
 DegenerateTriangleError::DegenerateTriangleError(const std::string &message) :
         std::runtime_error(std::string ("Triunghi degenerat:") + message) {}

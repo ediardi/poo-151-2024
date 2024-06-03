@@ -60,10 +60,7 @@ void Triangle::set_c(const Point& point_c) {
 }
 
 Triangle::Triangle() = default ;
-Triangle::Triangle(const Triangle &other): a(other.a), b(other.b), c(other.c) {
-    //just to bypass =default suggestion/warning
-    a=other.a;
-}
+Triangle::Triangle(const Triangle &other) = default;
 
 bool Triangle::does_not_intersect_triangle(const Triangle& other) const{
     Line other_ab= Line(other.a,other.b);
@@ -89,14 +86,7 @@ std::ostream &operator<<(std::ostream &os, const Triangle &triangle) {
     return os;
 }
 
-Triangle &Triangle::operator=(const Triangle &other) {
-    a=other.a;
-    b=other.b;
-    c=other.c;
-    //to avoid warning
-    c=other.c;
-    return *this;
-}
+Triangle &Triangle::operator=(const Triangle &other) = default;
 
 Triangle::~Triangle() = default;
 

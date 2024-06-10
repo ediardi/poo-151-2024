@@ -55,7 +55,6 @@ void GameStateManager::handle_click(float x, float y) {
         case showing_result:
         {
             throw CannotProcessClick("The game is currently processing results, click ignored");
-            break;
         }
         case game_end:
         {

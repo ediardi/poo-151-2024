@@ -6,6 +6,7 @@
 #define OOP_STOPWATCH_H
 
 #include <chrono>
+#include <string>
 #include "GeometricError.h"
 
 using namespace std::chrono;

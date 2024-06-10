@@ -20,10 +20,10 @@ PlayerTriangle::PlayerTriangle() = default;
 float PlayerTriangle::get_area() const
 {
     if(a==b)
-        throw DegenerateTriangleError("matching points a and b");
+        throw DegenerateTriangle("matching points a and b");
     if(b==c)
-        throw DegenerateTriangleError("matching points b and c");
+        throw DegenerateTriangle("matching points b and c");
     if(a==c)
-        throw DegenerateTriangleError("matching points a and c");
+        throw DegenerateTriangle("matching points a and c");
     return fabsf(get_signed_area());
 }

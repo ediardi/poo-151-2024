@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include "Stopwatch.h"
 #include "GameStateManager.h"
 #include "Drawables.h"
 #include "Point.h"
@@ -16,6 +17,7 @@ GameStateManager::GameStateManager():fin("levels.txt") {
 }
 
 void GameStateManager::handle_click(float x, float y) {
+    Stopwatch::discard_double_action();
     switch (state) {
         case awaiting_point:
         {
@@ -51,6 +53,10 @@ void GameStateManager::handle_click(float x, float y) {
             break;
         }
         case showing_result:
+        {
+            throw CannotProcessClick("The game is currently processing results, click ignored");
+            break;
+        }
         case game_end:
         {
             break;
@@ -127,7 +133,7 @@ void GameStateManager::evaluate() {
             std::cout << candidate_triangle;
             std::cout<<"The triangle has an area equal to "<<candidate_triangle.get_area()<<std::endl<<std::endl;
         }
-        catch (DegenerateTriangleError& err){
+        catch (GeometricError& err){
             std::cout << "The triangle you entered is degenerate and has no area"<< std::endl;
             std::cout << err.what() << std::endl;
         }

@@ -82,7 +82,15 @@ int main() {
                 sf::Vector2 mouse_position = sf::Mouse::getPosition(window);
                 sf::Vector2f coordinates(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y));
                 std::cout << "Got click " << mouse_position.x << ' ' << mouse_position.y << "\n";
-                game.handle_click(coordinates.x,coordinates.y);
+                try {
+                    game.handle_click(coordinates.x, coordinates.y);
+                }
+                catch (CannotProcessClick& err){
+                    std::cout << err.what() << std::endl;
+                }
+                catch (DoubleClick& err){
+                    std::cout << err.what() << std::endl;
+                }
                 break;
             }
             default:

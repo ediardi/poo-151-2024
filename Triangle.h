@@ -35,7 +35,8 @@ public:
     void set_b(const Point& point_b);
     void set_c(const Point& point_c);
     [[nodiscard]] bool does_not_intersect_triangle(const Triangle& other) const;
-    [[nodiscard]] float get_area() const;
+
+    [[nodiscard]] virtual float get_area() const;
     friend std::ostream& operator<<(std::ostream& os, const Triangle& triangle);
 
     [[nodiscard]] virtual float best_area() const {

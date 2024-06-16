@@ -5,9 +5,9 @@
 #include "Line.h"
 #include "cmath"
 
-//Point Line::startpoint() { return a;}
+Point Line::startpoint() { return a;}
 
-//Point Line::endpoint() { return b;}
+Point Line::endpoint() { return b;}
 
 Line::Line(Point a1, Point b1) : a(a1),b(b1) {}
 

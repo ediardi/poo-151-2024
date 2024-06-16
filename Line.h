@@ -10,8 +10,8 @@
 class Line {
     Point a,b;
 public:
-    //Point startpoint();
-    //Point endpoint();
+    Point startpoint();
+    Point endpoint();
     Line(Point a1,Point b1);
     [[nodiscard]] bool intersects(Line line) const;
     [[nodiscard]] float get_length() const;

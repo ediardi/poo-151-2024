@@ -107,26 +107,24 @@ add_executable(${PROJECT_NAME}
     main.cpp
     generated/src/Helper.cpp
     env_fixes.h
-        Triangle.h
         Point.h
         Point.cpp
-        Triangle.cpp
         Drawables.cpp
         Drawables.h
         Line.cpp
         Line.h
         GameStateManager.cpp
         GameStateManager.h
-        ColoredTriangle.cpp
-        ColoredTriangle.h
-        TriangleWithCenter.cpp
-        TriangleWithCenter.h
-        PlayerTriangle.cpp
-        PlayerTriangle.h
         GeometricError.cpp
         GeometricError.h
         Stopwatch.h
         Stopwatch.cpp
+        MapGenerator.cpp
+        MapGenerator.h
+        Node.cpp
+        Node.h
+        LineDecorator.cpp
+        LineDecorator.h
 )
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/levels.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

@@ -14,15 +14,14 @@
 
 #include "Drawables.h"
 #include "GameStateManager.h"
-
-
-
+#include "GeometricError.h"
+#include "MapGenerator.h"
 
 
 // static variables
 sf::VertexArray Drawables::points;
+sf::VertexArray Drawables::lines(sf::Lines,0);
 std::unordered_map<int,sf::CircleShape> Drawables::circles;
-std::unordered_map<int,ColoredTriangle> Drawables::triangles;
 
 
 int main() {
@@ -55,8 +54,11 @@ int main() {
     ///////////////////////////////////////////////////////////////////////////
 
     // for executable debug purposes
-    if(window.isOpen())
-        std::cout<<"Game window opened"<<std::endl;
+    if(window.isOpen()) {
+        std::cout << "Game window opened" << std::endl;
+        auto map=MapGenerator(window.getSize().x,window.getSize().y);
+        //auto graph=mapgenerator::;
+    }
 
     while(window.isOpen()) {
         bool shouldExit = false;
@@ -106,8 +108,6 @@ int main() {
             window.close();
             break;
         }
-
-        game.frame_update();
 
         window.clear();
         Drawables drawables;

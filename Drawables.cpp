@@ -9,12 +9,12 @@ void Drawables::add(sf::Vertex x) {
     points.append(x);
 }
 
-int Drawables::add_circle(Point origin, float radius) {
+int Drawables::add_node(Point origin, float radius=10) {
     sf::CircleShape circle(radius,60);
     circle.setOrigin(radius,radius);
     circle.setPosition(origin.getx(),origin.gety());
     circle.setOutlineColor(sf::Color::White);
-    circle.setFillColor(sf::Color::Transparent);
+    circle.setFillColor(sf::Color::Black);
     circle.setOutlineThickness(1);
     int new_index=(int)circles.size();
     circles[new_index]=circle;
@@ -23,7 +23,6 @@ int Drawables::add_circle(Point origin, float radius) {
 
 void Drawables::clear_all() {
     points.clear();
-    triangles.clear();
     circles.clear();
 }
 
@@ -32,64 +31,29 @@ void Drawables::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     states.texture=states.texture;
     //
     target.draw(points);
+
+    target.draw(lines);
+
     for(const auto &item:circles)
     {
         auto circle =item.second;
         target.draw(circle);
     }
-    sf::VertexArray line_points(sf::Lines, 0);
-    for(const auto& item:triangles)
-    {
-        auto triangle_struct=item.second.get_triangle();
-        auto triangle_color=item.second.get_color();
-        sf::Vertex p;
-        Point a= triangle_struct.get_a();
-        Point b= triangle_struct.get_b();
-        Point c= triangle_struct.get_c();
-
-        p= a.to_vertex();
-        p.color=triangle_color;
-        line_points.append(p);
-        p= b.to_vertex();
-        p.color=triangle_color;
-        line_points.append(p);
-
-        p= b.to_vertex();
-        p.color=triangle_color;
-        line_points.append(p);
-        p= c.to_vertex();
-        p.color=triangle_color;
-        line_points.append(p);
-
-        p= c.to_vertex();
-        p.color=triangle_color;
-        line_points.append(p);
-        p= a.to_vertex();
-        p.color=triangle_color;
-        line_points.append(p);
-    }
-    target.draw(line_points);
-}
-
-int Drawables::add_triangle(const Triangle& triangle) {
-    int new_index=(int)triangles.size();
-    triangles.insert({new_index,ColoredTriangle(triangle,sf::Color::White)});
-    return new_index;
 }
 
 void Drawables::change_circle_color(const int index, const sf::Color new_color) {
     circles[index].setOutlineColor(new_color);
 }
 
-void Drawables::change_triangle_color(const int index, const sf::Color new_color) {
-    triangles.at(index).set_color(new_color);
+void Drawables::add_line(Line l) {
+    auto x=l.startpoint().to_vertex();
+    lines.append(x);
+    auto y=l.endpoint().to_vertex();
+    lines.append(y);
 }
+
 
 /*sf::Color Drawables::get_circle_color(const int index) {
     return circles[index].getOutlineColor();
 }*/
-
-sf::Color Drawables::get_triangle_color(const int index) {
-    return triangles.at(index).get_color();
-}
 

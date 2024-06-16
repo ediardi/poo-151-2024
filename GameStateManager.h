@@ -7,8 +7,6 @@
 
 
 #include <fstream>
-#include "TriangleWithCenter.h"
-#include "PlayerTriangle.h"
 
 class GameStateManager {
     std::ifstream fin;
@@ -17,13 +15,6 @@ class GameStateManager {
     void next_level();
     void evaluate();
     bool replay_level=false;
-    TriangleWithCenter challenge_triangle;
-    PlayerTriangle candidate_triangle;
-    sf::Color highlight_color;
-    sf::Color opposite(sf::Color color) const;
-    int draw_circle_index = -1;
-    int draw_challenge_triangle_index = -1;
-    int draw_candidate_triangle_index = -1;
     enum State{
         awaiting_point,
         showing_result,
@@ -35,9 +26,6 @@ public:
     ~GameStateManager();
     void handle_click(float x, float y);
     bool has_ended();
-    void frame_update();
-    bool is_in_circle() const;
-    bool triangles_do_not_intersect() const;
 };
 
 

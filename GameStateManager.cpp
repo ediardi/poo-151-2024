@@ -8,21 +8,17 @@
 #include "Drawables.h"
 #include "Point.h"
 
-GameStateManager::GameStateManager():fin("levels.txt") {
+GameStateManager::GameStateManager(MapGenerator &map):fin("levels.txt"), map(map) {
     fin>>n;
     index=0;
-    std::cout << "This game has " << n << " levels in which you have to make a triangle of largest area possible that is within the circumscribed circle of the given triangle and does not intersect it" << std::endl;
-    std::cout << "To pass each level you have to have an area of at least 75% of the theoretical maximum area" << std::endl;
 }
 
 void GameStateManager::handle_click(float x, float y) {
     Stopwatch::discard_double_action();
-    ///remove later
-    x=x+y;
-    ///
     switch (state) {
         case awaiting_point:
         {
+            map.action(x,y);
             break;
         }
         case click_to_continue:

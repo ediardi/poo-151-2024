@@ -32,7 +32,7 @@ public:
             {
                 start_timing();
                 double dur= static_cast<double>(interval.count())/1e9;
-                throw DoubleClick("Action detected " + std::to_string (dur) + "s after previous action, discarding input");
+                throw DoubleClick("Action detected " + std::to_string (dur) + "s after previous can_be_captured, discarding input");
             }
         }
         start_timing();

@@ -7,9 +7,11 @@
 
 
 #include <fstream>
+#include "MapGenerator.h"
 
 class GameStateManager {
     std::ifstream fin;
+    MapGenerator& map;
     int n{},index,points=0, frames_to_show_results=0;
     const int results_max_frames = 45;
     void next_level();
@@ -22,7 +24,7 @@ class GameStateManager {
         game_end
     } state=awaiting_point;
 public:
-    GameStateManager();
+    explicit GameStateManager(MapGenerator &map);
     ~GameStateManager();
     void handle_click(float x, float y);
     bool has_ended();

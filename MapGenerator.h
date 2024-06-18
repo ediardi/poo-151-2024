@@ -14,10 +14,12 @@
 
 class MapGenerator {
     const int nr_nodes,minrad;
+    Capturer player;
     std::vector<Node> v;
     std::vector<LineDecorator> edges;
 public:
     explicit MapGenerator(unsigned int max_x,unsigned int max_y,const int nr_nodes = 10,const int minrad = 15) : nr_nodes(nr_nodes),minrad(minrad){
+        Node::set_rad(minrad);
         for (int i = 0; i < nr_nodes; ++i) {
             bool overlap=true;
             Point p;
@@ -33,7 +35,7 @@ public:
                     }
                 }
             }
-            auto node = Node(p);
+            auto node = Node(p,i);
             v.push_back(node);
             Drawables::add_node(p,minrad);
         }
@@ -93,6 +95,18 @@ public:
                     disconnected=true;
             }
         }
+    }
+    bool action(float x,float y){
+        for(Node node:v)
+        {
+            if (node.point_inside(x,y))
+            {
+                //node.change_color(sf::Color::Yellow);
+                player.move(node,v);
+                return true;
+            }
+        }
+        return false;
     }
 };
 

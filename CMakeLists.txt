@@ -125,6 +125,14 @@ add_executable(${PROJECT_NAME}
         Node.h
         LineDecorator.cpp
         LineDecorator.h
+        CapturableEntity.cpp
+        CapturableEntity.h
+        Capturer.cpp
+        Capturer.h
+        CapturedNode.cpp
+        CapturedNode.h
+        OccuppiedNode.cpp
+        OccupiedNode.h
 )
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/levels.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

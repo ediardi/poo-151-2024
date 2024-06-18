@@ -37,9 +37,6 @@ int main() {
     helper.help();
     ///////////////////////////////////////////////////////////////////////////
 
-
-    GameStateManager game;
-
     sf::RenderWindow window;
     ///////////////////////////////////////////////////////////////////////////
     /// NOTE: sync with env variable APP_WINDOW from .github/workflows/cmake.yml:31
@@ -56,9 +53,10 @@ int main() {
     // for executable debug purposes
     if(window.isOpen()) {
         std::cout << "Game window opened" << std::endl;
-        auto map=MapGenerator(window.getSize().x,window.getSize().y);
         //auto graph=mapgenerator::;
     }
+    auto map=MapGenerator(window.getSize().x,window.getSize().y);
+    GameStateManager game(map);
 
     while(window.isOpen()) {
         bool shouldExit = false;

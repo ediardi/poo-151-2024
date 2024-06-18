@@ -16,6 +16,9 @@ public:
         for(auto index:neighbours)
         {
             auto neigh= graph[index];
+            if(neigh.is_occupied_by(this))
+            {
+            }
         }
         //get from where
         //

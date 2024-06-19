@@ -54,3 +54,15 @@ bool Capturer::move(Node &node, std::vector<Node *> &graph) {
     }
     return false;
 }
+
+int Capturer::getCurrentPos() const {
+    return current_pos;
+}
+
+const sf::Color &Capturer::getCapturedCol() const {
+    return captured_col;
+}
+
+const sf::Color &Capturer::getOccupiedCol() const {
+    return occupied_col;
+}

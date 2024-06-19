@@ -14,11 +14,12 @@
 
 class MapGenerator {
     const int nr_nodes,minrad;
-    Capturer player;
+    Capturer player,enemy;
     std::vector<Node*> v;
     std::vector<LineDecorator> edges;
 public:
-    explicit MapGenerator(unsigned int max_x,unsigned int max_y,const int nr_nodes = 10,const int minrad = 15) : nr_nodes(nr_nodes),minrad(minrad),player(Capturer()){
+    explicit MapGenerator(unsigned int max_x,unsigned int max_y,const int nr_nodes = 10,const int minrad = 15) :
+                    nr_nodes(nr_nodes),minrad(minrad),player(Capturer(sf::Color::Cyan,sf::Color::Blue)),enemy(Capturer(sf::Color::Magenta,sf::Color::Red)){
         Node::set_rad(minrad);
         for (int i = 0; i < nr_nodes; ++i) {
             bool overlap=true;
@@ -104,6 +105,12 @@ public:
                 //node.change_color(sf::Color::Yellow);
                 if(player.move(*node,v)) {
                     //enemy move
+                    //try to move to a random neigbour
+                    Node* rand_node= v[rand()%nr_nodes];
+                    while(!enemy.move(*rand_node,v))
+                    {
+                        rand_node= v[rand()%nr_nodes];
+                    }
                 }
                 return true;
             }

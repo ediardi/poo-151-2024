@@ -24,7 +24,7 @@ public:
     Node * new_state_on_move(Capturer &cap, Node &node) override;
     Node * new_state_on_removed(Capturer &cap, Node &node) override;
     void update_color() override{
-        Drawables::change_circle_color(index,sf::Color::Yellow);
+        Drawables::change_circle_color(index,capturer.getCapturedCol());
     }
 };
 

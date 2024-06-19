@@ -34,7 +34,7 @@ public:
         return this_node;
     }
     void update_color() override{
-        Drawables::change_circle_color(index,sf::Color::Red);
+        Drawables::change_circle_color(index,occupier.getOccupiedCol());
     }
 };
 

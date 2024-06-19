@@ -5,7 +5,7 @@ A ajuns insa in momentul in care skynet este lansat.
 Fiecare AI poate alege un server in care sa inceapa executia, apoi, pe rand, pot sa infecteze alte servere vecine. 
 Orice server cucerit va fi securzat, nu se mai poate schimba partea, dar virusul poate fi rutat prin el.
 
-![img.png](img.png)Screenshot 2024-04-24 164109.png
+![img_1.png](img_1.png)
 
 ### Important!
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.

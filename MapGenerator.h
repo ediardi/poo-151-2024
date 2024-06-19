@@ -18,7 +18,7 @@ class MapGenerator {
     std::vector<Node*> v;
     std::vector<LineDecorator> edges;
 public:
-    explicit MapGenerator(unsigned int max_x,unsigned int max_y,int nr_nodes = 10,int minradc = 15);
+    explicit MapGenerator(unsigned int max_x,unsigned int max_y,int nr_nodes = 50,int minradc = 10);
     bool action(float x,float y);
 };
 

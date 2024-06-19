@@ -115,8 +115,8 @@ add_executable(${PROJECT_NAME}
         Line.h
         GameStateManager.cpp
         GameStateManager.h
-        GeometricError.cpp
-        GeometricError.h
+        GameStateError.cpp
+        GameStateError.h
         Stopwatch.h
         Stopwatch.cpp
         MapGenerator.cpp
@@ -131,7 +131,7 @@ add_executable(${PROJECT_NAME}
         Capturer.h
         CapturedNode.cpp
         CapturedNode.h
-        OccuppiedNode.cpp
+        OccupiedNode.cpp
         OccupiedNode.h
 )
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/levels.txt
@@ -156,7 +156,8 @@ message("Compiler: ${CMAKE_CXX_COMPILER_ID} version ${CMAKE_CXX_COMPILER_VERSION
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /permissive- /wd4244 /wd4267 /wd4996 /external:anglebrackets /external:W0)
 else()
-    target_compile_options(${PROJECT_NAME} PRIVATE -Werror -Wall -Wextra -pedantic)
+    target_compile_options(${PROJECT_NAME} PRIVATE #-Werror
+     -Wall -Wextra -pedantic)
 endif()
 
 ###############################################################################

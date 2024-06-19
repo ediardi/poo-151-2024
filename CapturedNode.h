@@ -7,18 +7,24 @@
 
 #include "Node.h"
 
-class CapturedNode: Node {
-    Capturer& capturer;
-    void can_be_captured(Capturer &capturer) override{
+class OccupiedNode;
 
-    }
+class CapturedNode: public Node {
+    Capturer& capturer;
 public:
     explicit CapturedNode(Node& node,Capturer& capturer1): Node(node), capturer(capturer1){};
-    bool can_be_occupied() override{
-        return true;
-    }
+
     bool is_occupied_by(Capturer &cap) override{
         return false;
+    }
+    Capturer& get_capturer()
+    {
+        return capturer;
+    }
+    Node * new_state_on_move(Capturer &cap, Node &node) override;
+    Node * new_state_on_removed(Capturer &cap, Node &node) override;
+    void update_color() override{
+        Drawables::change_circle_color(index,sf::Color::Yellow);
     }
 };
 

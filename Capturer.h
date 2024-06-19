@@ -6,24 +6,15 @@
 #define OOP_CAPTURER_H
 
 
-#include "Node.h"
+#include <vector>
+
+class Node;
 
 class Capturer {
+    int current_pos;
 public:
-    void move(Node& node,std::vector<Node>& graph){
-        //validate move
-        std::vector<int>& neighbours= node.get_neighbours();
-        for(auto index:neighbours)
-        {
-            auto neigh= graph[index];
-            if(neigh.is_occupied_by(this))
-            {
-            }
-        }
-        //get from where
-        //
-
-    };
+    Capturer():current_pos(-1){}
+    bool move(Node& node, std::vector<Node *> &graph);
 };
 
 

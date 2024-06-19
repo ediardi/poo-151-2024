@@ -7,7 +7,7 @@
 
 #include <chrono>
 #include <string>
-#include "GeometricError.h"
+#include "GameStateError.h"
 
 using namespace std::chrono;
 class Stopwatch {

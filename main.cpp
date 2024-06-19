@@ -14,7 +14,7 @@
 
 #include "Drawables.h"
 #include "GameStateManager.h"
-#include "GeometricError.h"
+#include "GameStateError.h"
 #include "MapGenerator.h"
 
 

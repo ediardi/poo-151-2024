@@ -13,11 +13,18 @@
 #include "CapturableEntity.h"
 #include "Capturer.h"
 
+class CapturedNode;
+class OccupiedNode;
+
 class Node : public Point, public CapturableEntity{
     std::vector<int> next_index;
     static inline float rad;
+protected:
     int index;
 public:
+    [[nodiscard]] int get_index_in_graph() const{
+        return index;
+    }
     explicit Node(Point p,int i):Point(p),index(i){}
     void add_edge_by_index(int j)
     {
@@ -28,7 +35,7 @@ public:
     }
     bool point_inside(float x, float y){
         Point b=Point(x,y);
-        Line l=Line(*this,b);
+        Line l=Line(*dynamic_cast<Point*>(this),b);
         if(l.get_length()<=rad)
         {
             return true;
@@ -42,16 +49,17 @@ public:
         Drawables::change_circle_color(index,new_color);
     }
 
-    void can_be_captured(Capturer& capturer) override{
-
-    }
-
-    bool can_be_occupied() override{
-        return true;
-    }
     bool is_occupied_by(Capturer &cap) override{
         return false;
     }
+
+    virtual Node* new_state_on_move(Capturer& cap,Node& node);
+    virtual Node* new_state_on_removed(Capturer& cap,Node& node);
+    virtual void update_color(){
+        Drawables::change_circle_color(index,sf::Color::White);
+        std::cout<<"White";
+    }
+    virtual ~Node()= default;
 };
 
 

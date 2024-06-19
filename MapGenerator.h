@@ -15,10 +15,10 @@
 class MapGenerator {
     const int nr_nodes,minrad;
     Capturer player;
-    std::vector<Node> v;
+    std::vector<Node*> v;
     std::vector<LineDecorator> edges;
 public:
-    explicit MapGenerator(unsigned int max_x,unsigned int max_y,const int nr_nodes = 10,const int minrad = 15) : nr_nodes(nr_nodes),minrad(minrad){
+    explicit MapGenerator(unsigned int max_x,unsigned int max_y,const int nr_nodes = 10,const int minrad = 15) : nr_nodes(nr_nodes),minrad(minrad),player(Capturer()){
         Node::set_rad(minrad);
         for (int i = 0; i < nr_nodes; ++i) {
             bool overlap=true;
@@ -30,12 +30,12 @@ public:
                 //check for overlap
                 p = Point(x, y);
                 for (int j = 0; j < i; ++j) {
-                    if (Line(v[j], p).get_length() <= 2.0 * minrad) {
+                    if (Line(*dynamic_cast<Point*>(v[j]), p).get_length() <= 2.0 * minrad) {
                         overlap=true;
                     }
                 }
             }
-            auto node = Node(p,i);
+            auto node = new Node(p,i);
             v.push_back(node);
             Drawables::add_node(p,minrad);
         }
@@ -45,7 +45,7 @@ public:
         {
             for(int j=0;j<i;j++)
             {
-                edges.emplace_back(i,j,v[i],v[j]);
+                edges.emplace_back(i,j,*v[i],*v[j]);
             }
         }
         std::sort(edges.begin(),edges.end());
@@ -57,8 +57,8 @@ public:
             auto l=edges[index];
             int i=l.getI();
             int j=l.getJ();
-            v[i].add_edge_by_index(j);
-            v[j].add_edge_by_index(i);
+            v[i]->add_edge_by_index(j);
+            v[j]->add_edge_by_index(i);
             Drawables::add_line(l);
 
             //if connected break
@@ -97,12 +97,14 @@ public:
         }
     }
     bool action(float x,float y){
-        for(Node node:v)
+        for(Node* node:v)
         {
-            if (node.point_inside(x,y))
+            if (node->point_inside(x,y))
             {
                 //node.change_color(sf::Color::Yellow);
-                player.move(node,v);
+                if(player.move(*node,v)) {
+                    //enemy move
+                }
                 return true;
             }
         }

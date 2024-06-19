@@ -13,7 +13,6 @@ public:
     Point startpoint();
     Point endpoint();
     Line(Point a1,Point b1);
-    [[nodiscard]] bool intersects(Line line) const;
     [[nodiscard]] float get_length() const;
     friend std::ostream& operator<<(std::ostream& os, const Line& line);
 };

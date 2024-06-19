@@ -14,7 +14,7 @@ class CapturedNode: public Node {
 public:
     explicit CapturedNode(Node& node,Capturer& capturer1): Node(node), capturer(capturer1){};
 
-    bool is_occupied_by(Capturer &cap) override{
+    bool is_occupied_by(Capturer &) override{
         return false;
     }
     Capturer& get_capturer()

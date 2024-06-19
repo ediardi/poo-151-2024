@@ -14,6 +14,7 @@ bool Capturer::move(Node &node, std::vector<Node *> &graph) {
             graph[node.get_index_in_graph()] = node.new_state_on_move(*this,node);
             graph[node.get_index_in_graph()]->update_color();
             current_pos=node.get_index_in_graph();
+            Drawables::move_pawn(getId(), *graph[node.get_index_in_graph()]);
             return true;
         }
         catch(AlreadyOccupiedError &err){
@@ -22,7 +23,7 @@ bool Capturer::move(Node &node, std::vector<Node *> &graph) {
         }
     }
 
-    std::vector<int>& neighbours= node.get_neighbours();
+    const std::vector<int>& neighbours= node.get_neighbours();
     int valid= -1;
     for(auto index:neighbours)
     {
@@ -38,6 +39,7 @@ bool Capturer::move(Node &node, std::vector<Node *> &graph) {
             graph[node.get_index_in_graph()] = node.new_state_on_move(*this,node);
             graph[node.get_index_in_graph()]->update_color();
             current_pos=node.get_index_in_graph();
+            Drawables::move_pawn(getId(), *graph[node.get_index_in_graph()]);
             Node* temp=graph[valid];
             graph[valid] = temp->new_state_on_removed(*this,*temp);
             graph[valid]->update_color();
@@ -65,4 +67,8 @@ const sf::Color &Capturer::getCapturedCol() const {
 
 const sf::Color &Capturer::getOccupiedCol() const {
     return occupied_col;
+}
+
+int Capturer::getId() const {
+    return id;
 }

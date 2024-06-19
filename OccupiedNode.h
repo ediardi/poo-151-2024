@@ -25,16 +25,16 @@ public:
         }
         return false;
     }
-    Node * new_state_on_move(Capturer &cap, Node &node) override{
+    Node * new_state_on_move(Capturer &, Node &) override{
         throw AlreadyOccupiedError("Tile already occupied");
     }
-    Node * new_state_on_removed(Capturer &cap, Node &node) override{
+    Node * new_state_on_removed(Capturer &, Node &node) override{
         auto upnode=dynamic_cast<CapturedNode*>(&node);
         auto this_node= new CapturedNode(*upnode);
         return this_node;
     }
     void update_color() override{
-        Drawables::change_circle_color(index,occupier.getOccupiedCol());
+        Drawables::change_circle_color(index,get_capturer().getCapturedCol());
     }
 };
 

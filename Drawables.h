@@ -10,14 +10,18 @@
 #include "Point.h"
 #include "Line.h"
 
+class Node;
+
 
 class Drawables : public sf::Drawable{
 private:
     static sf::VertexArray points;
     static sf::VertexArray lines;
     static std::unordered_map<int, sf::CircleShape> circles;
+    static std::unordered_map<int, sf::CircleShape> pawns;
 public:
-    static void add(sf::Vertex x);
+    static void add(sf::Vertex x,sf::Color col,float radius = 5);
+    static void move_pawn(int index, const Node& x);
     static int add_node(Point origin, float radius);
     static void add_line(Line l);
     //static void change_circle_color(sf::CircleShape& reference,sf::Color color);

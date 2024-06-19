@@ -12,11 +12,12 @@
 class GameStateManager {
     std::ifstream fin;
     MapGenerator& map;
-    int n{},index,points=0, frames_to_show_results=0;
+    int n{},index,points=0;
+    //int frames_to_show_results=0;
     const int results_max_frames = 45;
-    void next_level();
-    void evaluate();
-    bool replay_level=false;
+    //void next_level();
+    //void evaluate();
+    //bool replay_level=false;
     enum State{
         awaiting_point,
         showing_result,

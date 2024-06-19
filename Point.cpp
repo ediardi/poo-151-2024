@@ -16,8 +16,8 @@ Point::Point(int x,int y)
         this->x= static_cast<float>(x);
         this->y= static_cast<float>(y);
     }
-void Point::setx(float new_x){this->x=new_x;}
-void Point::sety(float new_y){this->y=new_y;}
+//void Point::setx(float new_x){this->x=new_x;}
+//void Point::sety(float new_y){this->y=new_y;}
 float Point::getx() const{return x;}
 float Point::gety() const{return y;}
 sf::Vertex Point::to_vertex() const

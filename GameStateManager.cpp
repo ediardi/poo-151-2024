@@ -47,9 +47,8 @@ bool GameStateManager::has_ended() {
     return false;
 }
 
+/*
 void GameStateManager::evaluate() {
     state=showing_result;
-}
-
-
+}*/
 

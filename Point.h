@@ -15,8 +15,8 @@ public:
     Point();
     Point(int x,int y);
     Point(float x,float y);
-    void setx(float new_x);
-    void sety(float new_y);
+    //void setx(float new_x);
+    //void sety(float new_y);
     [[nodiscard]] float getx() const;
     [[nodiscard]] float gety() const;
     [[nodiscard]] sf::Vertex to_vertex() const;

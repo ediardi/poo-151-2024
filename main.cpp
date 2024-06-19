@@ -22,6 +22,7 @@
 sf::VertexArray Drawables::points;
 sf::VertexArray Drawables::lines(sf::Lines,0);
 std::unordered_map<int,sf::CircleShape> Drawables::circles;
+std::unordered_map<int,sf::CircleShape> Drawables::pawns;
 
 
 int main() {

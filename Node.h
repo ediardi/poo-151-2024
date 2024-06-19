@@ -49,7 +49,7 @@ public:
         Drawables::change_circle_color(index,new_color);
     }
 
-    bool is_occupied_by(Capturer &cap) override{
+    bool is_occupied_by(Capturer &) override{
         return false;
     }
 

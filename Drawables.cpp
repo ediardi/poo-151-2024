@@ -3,10 +3,18 @@
 //
 
 #include "Drawables.h"
+#include "Node.h"
 
 
-void Drawables::add(sf::Vertex x) {
-    points.append(x);
+void Drawables::add(sf::Vertex x,sf::Color col,float radius) {
+    sf::CircleShape circle(radius,30);
+    circle.setOrigin(radius,radius);
+    circle.setPosition(x.position.x,x.position.y);
+    circle.setOutlineColor(col);
+    circle.setFillColor(col);
+    circle.setOutlineThickness(1);
+    int new_index=(int)pawns.size();
+    pawns[new_index]=circle;
 }
 
 int Drawables::add_node(Point origin, float radius=10) {
@@ -30,7 +38,6 @@ void Drawables::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     // to do: delete (placed here to avoid unused warning)
     states.texture=states.texture;
     //
-    target.draw(points);
 
     target.draw(lines);
 
@@ -39,6 +46,14 @@ void Drawables::draw(sf::RenderTarget &target, sf::RenderStates states) const {
         auto circle =item.second;
         target.draw(circle);
     }
+
+    for(const auto &item:pawns)
+    {
+        auto circle =item.second;
+        target.draw(circle);
+    }
+
+    target.draw(points);
 }
 
 void Drawables::change_circle_color(const int index, const sf::Color new_color) {
@@ -50,6 +65,10 @@ void Drawables::add_line(Line l) {
     lines.append(x);
     auto y=l.endpoint().to_vertex();
     lines.append(y);
+}
+
+void Drawables::move_pawn(int index, const Node& x) {
+    pawns[index].setPosition( x.to_vertex().position );
 }
 
 

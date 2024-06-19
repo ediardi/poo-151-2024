@@ -57,18 +57,21 @@ bool Capturer::move(Node &node, std::vector<Node *> &graph) {
     return false;
 }
 
-int Capturer::getCurrentPos() const {
-    return current_pos;
-}
 
 const sf::Color &Capturer::getCapturedCol() const {
     return captured_col;
 }
 
-const sf::Color &Capturer::getOccupiedCol() const {
+/*const sf::Color &Capturer::getOccupiedCol() const {
     return occupied_col;
-}
+}*/
 
 int Capturer::getId() const {
     return id;
+}
+
+Capturer::Capturer(sf::Color cap_col, sf::Color occ_col)
+        :id(id_c),current_pos(-1),captured_col(cap_col),occupied_col(occ_col){
+    id_c++;
+    Drawables::add(sf::Vertex(),occupied_col);
 }

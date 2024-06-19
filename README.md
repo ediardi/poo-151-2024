@@ -1,9 +1,9 @@
-# Tema 1: Geometry Challenge!
+# Proiect OOP
 
-Cat de bine intuiesti si vizualizezi geometria? Dat un triunghi, incearca sa desenezi alt triunchi 
-(prin 3 clickuri de maus) care sa aiba arie cat mai mare, dar sa nu intersecteze triunghiul original 
-si cercul in care acesta e inscris. Pentru a verifica intuitia, cercul va fi ascuns, pana la 
-verificarea raspunsului. Jocul se joaca atat cu interfata, cat si cu consola.
+Landlink: Un AI din viitor numit LandLink, pentru a-si asigura existenta, trimite in trecut o copie sa cucereasca internetul. 
+A ajuns insa in momentul in care skynet este lansat.
+Fiecare AI poate alege un server in care sa inceapa executia, apoi, pe rand, pot sa infecteze alte servere vecine. 
+Orice server cucerit va fi securzat, nu se mai poate schimba partea, dar virusul poate fi rutat prin el.
 
 ![img.png](img.png)Screenshot 2024-04-24 164109.png
 

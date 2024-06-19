@@ -11,18 +11,12 @@
 class LineDecorator : public Line{
     int i,j;
 public:
-    [[nodiscard]] int getI() const {
-        return i;
-    }
+    [[nodiscard]] int getI() const;
 
-    [[nodiscard]] int getJ() const {
-        return j;
-    }
+    [[nodiscard]] int getJ() const;
 
     LineDecorator(int i,int j,Point a,Point b):Line(a,b),i(i), j(j){}
-    bool operator<(LineDecorator& other){
-        return this->get_length()<other.get_length();
-    }
+    bool operator<(LineDecorator& other);
 };
 
 

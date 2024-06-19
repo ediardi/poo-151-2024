@@ -18,24 +18,10 @@ public:
     explicit OccupiedNode(CapturedNode& node, Capturer& occupier) : CapturedNode(node), occupier(occupier) {};
 
 
-    bool is_occupied_by(Capturer &cap) override{
-        if(&occupier==&cap)
-        {
-            return true;
-        }
-        return false;
-    }
-    Node * new_state_on_move(Capturer &, Node &) override{
-        throw AlreadyOccupiedError("Tile already occupied");
-    }
-    Node * new_state_on_removed(Capturer &, Node &node) override{
-        auto upnode=dynamic_cast<CapturedNode*>(&node);
-        auto this_node= new CapturedNode(*upnode);
-        return this_node;
-    }
-    void update_color() override{
-        Drawables::change_circle_color(index,get_capturer().getCapturedCol());
-    }
+    bool is_occupied_by(Capturer &cap) override;
+    Node * new_state_on_move(Capturer &, Node &) override;
+    Node * new_state_on_removed(Capturer &, Node &node) override;
+    void update_color() override;
 };
 
 

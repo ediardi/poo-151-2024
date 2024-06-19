@@ -13,3 +13,15 @@ Node *CapturedNode::new_state_on_move(Capturer &cap, Node &node) {
 Node *CapturedNode::new_state_on_removed(Capturer &cap, Node &node) {
     return Node::new_state_on_removed(cap, node);
 }
+
+bool CapturedNode::is_occupied_by(Capturer &) {
+    return false;
+}
+
+Capturer &CapturedNode::get_capturer() {
+    return capturer;
+}
+
+void CapturedNode::update_color() {
+    Drawables::change_circle_color(index,capturer.getCapturedCol());
+}

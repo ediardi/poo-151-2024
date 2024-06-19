@@ -14,18 +14,11 @@ class CapturedNode: public Node {
 public:
     explicit CapturedNode(Node& node,Capturer& capturer1): Node(node), capturer(capturer1){};
 
-    bool is_occupied_by(Capturer &) override{
-        return false;
-    }
-    Capturer& get_capturer()
-    {
-        return capturer;
-    }
+    bool is_occupied_by(Capturer &) override;
+    Capturer& get_capturer();
     Node * new_state_on_move(Capturer &cap, Node &node) override;
     Node * new_state_on_removed(Capturer &cap, Node &node) override;
-    void update_color() override{
-        Drawables::change_circle_color(index,capturer.getCapturedCol());
-    }
+    void update_color() override;
 };
 
 

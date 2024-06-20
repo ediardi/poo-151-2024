@@ -28,7 +28,7 @@ public:
     static void set_rad(float other_rad);
     bool point_inside(float xc, float yc);
     std::vector<int>& get_neighbours();
-    void change_color(sf::Color new_color) const;
+    //void change_color(sf::Color new_color) const;
     bool is_occupied_by(Capturer &) override;
     virtual Node* new_state_on_move(Capturer& cap,Node& node);
     virtual Node* new_state_on_removed(Capturer& cap,Node& node);

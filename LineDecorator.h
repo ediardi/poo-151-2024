@@ -16,7 +16,7 @@ public:
     [[nodiscard]] int getJ() const;
 
     LineDecorator(int i,int j,Point a,Point b):Line(a,b),i(i), j(j){}
-    bool operator<(LineDecorator& other);
+    bool operator<(const LineDecorator& other) const;
 };
 
 

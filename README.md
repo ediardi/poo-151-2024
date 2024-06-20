@@ -1,6 +1,6 @@
-# Proiect OOP
+# Landlink's revenge
 
-Landlink: Un AI din viitor numit LandLink, pentru a-si asigura existenta, trimite in trecut o copie sa cucereasca internetul. 
+Un AI din viitor numit LandLink, pentru a-si asigura existenta, trimite in trecut o copie sa cucereasca internetul. 
 A ajuns insa in momentul in care skynet este lansat.
 Fiecare AI poate alege un server in care sa inceapa executia, apoi, pe rand, pot sa infecteze alte servere vecine. 
 Orice server cucerit va fi securzat, nu se mai poate schimba partea, dar virusul poate fi rutat prin el.

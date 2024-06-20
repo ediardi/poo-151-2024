@@ -39,9 +39,9 @@ void Node::set_rad(float other_rad) {
     rad=other_rad;
 }
 
-void Node::change_color(sf::Color new_color) const {
+/*void Node::change_color(sf::Color new_color) const {
     Drawables::change_circle_color(index,new_color);
-}
+}*/
 
 bool Node::is_occupied_by(Capturer &) {
     return false;

@@ -13,7 +13,7 @@
 #include "Drawables.h"
 
 class MapGenerator {
-    [[maybe_unused]] const int nr_nodes,minrad;
+    const int nr_nodes,minrad;
     Capturer player,enemy;
     std::vector<Node*> v;
     std::vector<LineDecorator> edges;

@@ -4,7 +4,7 @@
 
 #include "LineDecorator.h"
 
-bool LineDecorator::operator<(LineDecorator &other) {
+bool LineDecorator::operator<(const LineDecorator &other) const {
     return this->get_length()<other.get_length();
 }
 

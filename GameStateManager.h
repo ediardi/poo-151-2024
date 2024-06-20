@@ -12,7 +12,7 @@
 class GameStateManager {
     std::ifstream fin;
     MapGenerator& map;
-    int n{},index,points=0;
+    int n{},index;
     //int frames_to_show_results=0;
     //const int results_max_frames = 45;
     //void next_level();
